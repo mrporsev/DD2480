@@ -178,6 +178,52 @@ public class assignment1 {
                 }
 
             case 4:
+                /*
+                 * There exists at least one set of Q_PTS consecutive data points that lie in
+                 * more than QUADS
+                 * quadrants. Where there is ambiguity as to which quadrant contains a given
+                 * point, priority
+                 * of decision will be by quadrant number, i.e., I, II, III, IV. For example,
+                 * the data point (0,0)
+                 * is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in
+                 * quadrant III, the point
+                 * (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+                 * (2 ≤ Q_PTS ≤ NUMPOINTS), (1 ≤ QUADS ≤ 3)
+                 */
+
+                for (int i = 0; i < listOfCoordinates.length - Q_PTS; i++) {
+
+                    for (int qthPoint = 0; qthPoint < Q_PTS; qthPoint++) {
+
+                        int xCoordinateQthPoint = listOfCoordinates[i + qthPoint];
+                        int yCoordinateQthPoint = listOfCoordinates[i + qthPoint];
+
+                        // First quadrant (x >= 0 and y >= 0)
+                        if ((xCoordinateQthPoint >= 0) && (yCoordinateQthPoint >= 0)) {
+                            // Implement a structure to keep track of this
+                            break;
+                        }
+
+                        // Second quadrant (x < 0 and y >= 0)
+                        else if ((xCoordinateQthPoint >= 0) && (yCoordinateQthPoint >= 0)) {
+                            // Implement a structure to keep track of this
+                            break;
+                        }
+
+                        // Third quadrant (x <= 0 and y < 0)
+                        else if ((xCoordinateQthPoint <= 0) && (yCoordinateQthPoint >= 0)) {
+                            // Implement a structure to keep track of this
+                            break;
+                        }
+
+                        // Fourth quadrant (x >= 0 and y < 0)
+                        else if ((xCoordinateQthPoint >= 0) && (yCoordinateQthPoint >= 0)) {
+                            // Implement a structure to keep track of this
+                            break;
+                        }
+
+                    }
+                }
 
             case 5:
 
