@@ -105,23 +105,17 @@ public class assignment1 {
                     pointB = listOfCoordinates[i + 1]; // The vertex
                     pointC = listOfCoordinates[i + 2];
 
-                    // Length between x-coordinates to...
-                    // Point A
+                    // Distance between x-coordinates
                     int xDistanceAB = Math.abs(pointA[0] - pointB[0]);
-                    // Point B
                     int xDistanceBC = Math.abs(pointB[0] - pointC[0]);
-                    // Point C
                     int xDistanceCA = Math.abs(pointC[0] - pointA[0]);
 
-                    // Length between y-coordinates to...
-                    // Point A
+                    // Distance between y-coordinates
                     int yDistanceAB = Math.abs(pointA[1] - pointB[1]);
-                    // Point B
                     int yDistanceBC = Math.abs(pointB[1] - pointC[1]);
-                    // Point C
                     int yDistanceCA = Math.abs(pointC[1] - pointA[1]);
 
-                    // The length between the points
+                    // Distance between the points
                     double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB)); // A - B
                     double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC)); // B - C
                     double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA)); // C - A
