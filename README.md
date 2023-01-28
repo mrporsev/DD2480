@@ -1,6 +1,6 @@
 # DD2480
-## Git Commit Message template
-## `type(#issuenumber): Description`
+## Git Commit Message Template
+## `type(domain): Description #issuenumber`
 
 ### Types
 - `build`: Changes that affect the build system or external dependencies (example scopes: broccoli, npm).
@@ -11,3 +11,9 @@
 - `revert`: Reverts a previous commit.
 - `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc).
 - `test`: Adding missing tests or correcting existing tests.
+
+### Example of domains
+- `LIC`
+- `PUM`
+- `FUV`
+- `Gradle`
