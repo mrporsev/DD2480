@@ -56,41 +56,24 @@ public class assignment1 {
                     pointB = listOfCoordinates[i + 1];
                     pointC = listOfCoordinates[i + 2];
 
-                    // Length between x-coordinates to...
-                    // Point A
-                    int xDistanceA1 = Math.abs(pointA[0] - pointB[0]);
-                    int xDistanceA2 = Math.abs(pointA[0] - pointC[0]);
-                    // Point B
-                    int xDistanceB1 = Math.abs(pointB[0] - pointA[0]);
-                    int xDistanceB2 = Math.abs(pointB[0] - pointC[0]);
-                    // Point C
-                    int xDistanceC1 = Math.abs(pointC[0] - pointA[0]);
-                    int xDistanceC2 = Math.abs(pointC[0] - pointB[0]);
+                    // Distance between x-coordinates
+                    int xDistanceAB = Math.abs(pointA[0] - pointB[0]);
+                    int xDistanceBC = Math.abs(pointB[0] - pointC[0]);
+                    int xDistanceCA = Math.abs(pointC[0] - pointA[0]);
 
-                    // Length between y-coordinates to...
-                    // Point A
-                    int yDistanceA1 = Math.abs(pointA[1] - pointB[1]);
-                    int yDistanceA2 = Math.abs(pointA[1] - pointC[1]);
-                    // Point B
-                    int yDistanceB1 = Math.abs(pointB[1] - pointA[1]);
-                    int yDistanceB2 = Math.abs(pointB[1] - pointC[1]);
-                    // Point C
-                    int yDistanceC1 = Math.abs(pointC[1] - pointA[1]);
-                    int yDistanceC2 = Math.abs(pointC[1] - pointB[1]);
+                    // Distance between y-coordinates
+                    int yDistanceAB = Math.abs(pointA[1] - pointB[1]);
+                    int yDistanceBC = Math.abs(pointB[1] - pointC[1]);
+                    int yDistanceCA = Math.abs(pointC[1] - pointA[1]);
 
-                    // The length between the points
-                    // From B & C to A
-                    double distanceA1 = Math.sqrt((xDistanceA1 * xDistanceA1) + (yDistanceA1 * yDistanceA1));
-                    double distanceA2 = Math.sqrt((xDistanceA2 * xDistanceA2) + (yDistanceA2 * yDistanceA2));
-                    // From A & C to B
-                    double distanceB1 = Math.sqrt((xDistanceB1 * xDistanceB1) + (yDistanceB1 * yDistanceB1));
-                    double distanceB2 = Math.sqrt((xDistanceB2 * xDistanceB2) + (yDistanceB2 * yDistanceB2));
-                    // From A & B to C
-                    double distanceC1 = Math.sqrt((xDistanceC1 * xDistanceC1) + (yDistanceC1 * yDistanceC1));
-                    double distanceC2 = Math.sqrt((xDistanceC2 * xDistanceC2) + (yDistanceC2 * yDistanceC2));
+                    // Distance between the points
+                    double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB));
+                    double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC));
+                    double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA));
 
-                    if ((distanceA1 > diameter) || (distanceA2 > diameter) || (distanceB1 > diameter)
-                            || (distanceB2 > diameter || (distanceC1 > diameter) || (distanceC2 > diameter))) {
+                    // If the length between some of the points are greater than the diameter, they
+                    // can't be within the radius
+                    if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
                         return false;
                     } else {
                         return true;
