@@ -140,6 +140,48 @@ public class assignment1 {
                 }
 
             case 3:
+                /*
+                 * There exists at least one set of three consecutive data points that are the
+                 * vertices of a triangle
+                 * with area greater than AREA1.
+                 * (0 ≤ AREA1)
+                 */
+
+                int[] pointA;
+                int[] pointB;
+                int[] pointC;
+
+                for (int i = 0; i < listOfCoordinates.length - 2; i++) {
+
+                    pointA = listOfCoordinates[i];
+                    pointB = listOfCoordinates[i + 1];
+                    pointC = listOfCoordinates[i + 2];
+
+                    // Distance between x-coordinates
+                    int xDistanceAB = Math.abs(pointA[0] - pointB[0]);
+                    int xDistanceBC = Math.abs(pointB[0] - pointC[0]);
+                    int xDistanceCA = Math.abs(pointC[0] - pointA[0]);
+
+                    // Distance between y-coordinates
+                    int yDistanceAB = Math.abs(pointA[1] - pointB[1]);
+                    int yDistanceBC = Math.abs(pointB[1] - pointC[1]);
+                    int yDistanceCA = Math.abs(pointC[1] - pointA[1]);
+
+                    // Distance between the points
+                    double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB));
+                    double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC));
+                    double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA));
+
+                    // Heron's formula
+                    double s = (distanceAB + distanceBC + distanceCA) / 2;
+                    double area = Math.sqrt(s * (s - distanceAB) * (s - distanceBC) * (s - distanceCA));
+
+                    if (area > AREA1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
 
             case 4:
 
