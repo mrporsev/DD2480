@@ -259,6 +259,56 @@ public class assignment1 {
             case 7:
 
             case 8:
+                /*
+                 * There exists at least one set of three data points separated by exactly A_PTS
+                 * and B_PTS consecutive intervening points, respectively, that cannot be
+                 * contained within or on a circle of radius RADIUS1. The condition is not met
+                 * when NUMPOINTS < 5.
+                 * 1 ≤ A_PTS, 1 ≤ B_PTS
+                 * A_PTS + B_PTS ≤ (NUMPOINTS−3)
+                 */
+
+                if (NUMPOINTS < 5) {
+                    return false;
+                }
+                if (A_PTS < 1 || B_PTS < 1 || A_PTS + B_PTS < NUMPOINTS - 3) {
+                    return false;
+                }
+
+                double diameter = 2 * RADIUS1;
+                int[] pointA;
+                int[] pointB;
+                int[] pointC;
+
+                for (int i = 0; i < listOfCoordinates.length - 3 - A_PTS - B_PTS; i++) {
+
+                    pointA = listOfCoordinates[i];
+                    pointB = listOfCoordinates[i + A_PTS]; // Maybe have to take +1 too if A_PTS and B_PTS are 1?
+                    pointC = listOfCoordinates[i + B_PTS]; // and + A_PTS here? Otherwise, they can pick the same point?
+
+                    // Distance between x-coordinates
+                    int xDistanceAB = Math.abs(pointA[0] - pointB[0]);
+                    int xDistanceBC = Math.abs(pointB[0] - pointC[0]);
+                    int xDistanceCA = Math.abs(pointC[0] - pointA[0]);
+
+                    // Distance between y-coordinates
+                    int yDistanceAB = Math.abs(pointA[1] - pointB[1]);
+                    int yDistanceBC = Math.abs(pointB[1] - pointC[1]);
+                    int yDistanceCA = Math.abs(pointC[1] - pointA[1]);
+
+                    // Distance between the points
+                    double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB));
+                    double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC));
+                    double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA));
+
+                    // If the length between some of the points are greater than the diameter, they
+                    // can't be within the radius
+                    if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
 
             case 9:
 
