@@ -365,6 +365,56 @@ public class assignment1 {
                 return false;
 
             case 10:
+                /*
+                 * There exists at least one set of three data points separated by exactly E_PTS
+                 * and F_PTS consecutive intervening points, respectively, that are the vertices
+                 * of a triangle with area greater than AREA1. The condition is not met when
+                 * NUMPOINTS < 5.
+                 * 1 ≤ E_PTS, 1 ≤ F_PTS
+                 * E_PTS + F_PTS ≤ NUMPOINTS−3
+                 */
+
+                if (NUMPOINTS < 5) {
+                    return false;
+                }
+                if (E_PTS < 1 || F_PTS < 1 || E_PTS + F_PTS < NUMPOINTS - 3) {
+                    return false;
+                }
+
+                int[] pointA;
+                int[] pointB;
+                int[] pointC;
+
+                for (int i = 0; i < listOfCoordinates.length - 3 - E_PTS - F_PTS; i++) {
+
+                    pointA = listOfCoordinates[i];
+                    pointB = listOfCoordinates[i + E_PTS]; // MAYBE +1 also? Same question as case 8&9)
+                    pointC = listOfCoordinates[i + F_PTS];
+
+                    // Distance between x-coordinates
+                    int xDistanceAB = Math.abs(pointA[0] - pointB[0]);
+                    int xDistanceBC = Math.abs(pointB[0] - pointC[0]);
+                    int xDistanceCA = Math.abs(pointC[0] - pointA[0]);
+
+                    // Distance between y-coordinates
+                    int yDistanceAB = Math.abs(pointA[1] - pointB[1]);
+                    int yDistanceBC = Math.abs(pointB[1] - pointC[1]);
+                    int yDistanceCA = Math.abs(pointC[1] - pointA[1]);
+
+                    // Distance between the points
+                    double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB));
+                    double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC));
+                    double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA));
+
+                    // Heron's formula
+                    double s = (distanceAB + distanceBC + distanceCA) / 2;
+                    double area = Math.sqrt(s * (s - distanceAB) * (s - distanceBC) * (s - distanceCA));
+
+                    if (area > AREA1) {
+                        return true;
+                    }
+                }
+                return false;
 
             case 11:
 
