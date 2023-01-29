@@ -417,6 +417,30 @@ public class assignment1 {
                 return false;
 
             case 11:
+                /*
+                 * There exists at least one set of two data points, (X[i],Y[i]) and
+                 * (X[j],Y[j]), separated by exactly G PTS consecutive intervening points, such
+                 * that X[j] - X[i] < 0. (where i < j ) The condition is not met when
+                 * NUMPOINTS < 3.
+                 * 1 ≤ G PTS ≤ NUMPOINTS−2
+                 */
+                if (NUMPOINTS < 3) {
+                    return false;
+                }
+                if (G_PTS < 1 || G_PTS < NUMPOINTS - 2) {
+                    return false;
+                }
+
+                for (int i = 0; i < listOfCoordinates.length - 1 - G_PTS; i++) {
+
+                    // TODO:
+                    // Need to decide how to structure the x- & y-coordinates so
+                    // "X[...]" are placeholders for now (just as "listOfCoordinates")
+                    if ((X[i + G_PTS] - X[i]) < 0) { // Since i = j-1 --> j = i+1 (Maybe +1 as above?)
+                        return true;
+                    }
+                }
+                return false;
 
             case 12:
 
