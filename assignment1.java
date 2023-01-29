@@ -75,11 +75,9 @@ public class assignment1 {
                     // can't be within the radius
                     if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
                         return false;
-                    } else {
-                        return true;
                     }
-
                 }
+                return false;
 
             case 2:
                 /*
@@ -127,11 +125,9 @@ public class assignment1 {
 
                     if ((angle < (Math.PI - EPSILON)) || (angle > (Math.PI + EPSILON))) {
                         return true;
-                    } else {
-                        return false;
                     }
-
                 }
+                return false;
 
             case 3:
                 /*
@@ -172,10 +168,9 @@ public class assignment1 {
 
                     if (area > AREA1) {
                         return true;
-                    } else {
-                        return false;
                     }
                 }
+                return false;
 
             case 4:
                 /*
@@ -253,6 +248,7 @@ public class assignment1 {
                         return true;
                     }
                 }
+                return false;
 
             case 6:
 
@@ -305,12 +301,68 @@ public class assignment1 {
                     // can't be within the radius
                     if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
                         return false;
-                    } else {
+                    }
+                }
+                return false;
+
+            case 9:
+                /*
+                 * There exists at least one set of three data points separated by exactly C_PTS
+                 * and D_PTS consecutive intervening points, respectively, that form an angle
+                 * such that:
+                 * angle < (PI−EPSILON)
+                 * or
+                 * angle > (PI+EPSILON)
+                 * The second point of the set of three points is always the vertex of the
+                 * angle. If either the first point or the last point (or both) coincide with
+                 * the vertex, the angle is undefined and the LIC is not satisfied by those
+                 * three points. When NUMPOINTS < 5, the condition is not met.
+                 * 1 ≤ C PTS, 1 ≤ D PTS
+                 * C_PTS + D_PTS ≤ NUMPOINTS−3
+                 */
+
+                if (NUMPOINTS < 5) {
+                    return false;
+                }
+                if (C_PTS < 1 || D_PTS < 1 || C_PTS + D_PTS < NUMPOINTS - 3) {
+                    return false;
+                }
+
+                int[] pointA;
+                int[] pointB;
+                int[] pointC;
+
+                for (int i = 0; i < listOfCoordinates.length - 3 - C_PTS - D_PTS; i++) {
+
+                    pointA = listOfCoordinates[i];
+                    pointB = listOfCoordinates[i + C_PTS]; // The vertex (MAYBE +1 also? Same question as case 8)
+                    pointC = listOfCoordinates[i + D_PTS];
+
+                    // Distance between x-coordinates
+                    int xDistanceAB = Math.abs(pointA[0] - pointB[0]);
+                    int xDistanceBC = Math.abs(pointB[0] - pointC[0]);
+                    int xDistanceCA = Math.abs(pointC[0] - pointA[0]);
+
+                    // Distance between y-coordinates
+                    int yDistanceAB = Math.abs(pointA[1] - pointB[1]);
+                    int yDistanceBC = Math.abs(pointB[1] - pointC[1]);
+                    int yDistanceCA = Math.abs(pointC[1] - pointA[1]);
+
+                    // Distance between the points
+                    double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB)); // A - B
+                    double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC)); // B - C
+                    double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA)); // C - A
+
+                    // The angle of the second point (B)
+                    double angle = Math
+                            .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) + (distanceCA * distanceCA))
+                                    / (2 * distanceAB * distanceBC));
+
+                    if ((angle < (Math.PI - EPSILON)) || (angle > (Math.PI + EPSILON))) {
                         return true;
                     }
                 }
-
-            case 9:
+                return false;
 
             case 10:
 
