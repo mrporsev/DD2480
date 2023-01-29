@@ -239,6 +239,20 @@ public class assignment1 {
                 return false;
 
             case 5:
+                /*
+                 * There exists at least one set of two consecutive data points, (X[i],Y[i]) and
+                 * (X[j],Y[j]), such that X[j] - X[i] < 0. (where i = j-1)
+                 */
+
+                for (int i = 0; i < listOfCoordinates.length - 1; i++) {
+
+                    // TODO:
+                    // Need to decide how to structure the x- & y-coordinates so
+                    // "X[...]" are placeholders for now (just as "listOfCoordinates")
+                    if ((X[i + 1] - X[i]) < 0) { // Since i = j-1 --> j = i+1
+                        return true;
+                    }
+                }
 
             case 6:
 
