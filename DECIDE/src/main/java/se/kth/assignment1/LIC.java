@@ -106,6 +106,9 @@ public class LIC {
          * The same as saying that the distance between a point and every other can't be
          * bigger than the diameter?
          */
+        if (parameters.RADIUS1 < 0) {
+            return false;
+        }
 
         double diameter = 2 * parameters.RADIUS1;
         Point pointA;
@@ -136,7 +139,7 @@ public class LIC {
             // If the length between some of the points are greater than the diameter, they
             // can't be within the radius
             if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
-                return false;
+                return true;
             }
         }
         return false;
@@ -160,6 +163,9 @@ public class LIC {
          * the angle is undefined and the LIC is not satisfied by those three points.
          * (0 ≤ EPSILON < PI)
          */
+        if (parameters.EPSILON < 0 || parameters.EPSILON >= Math.PI) {
+            return false;
+        }
 
         Point pointA;
         Point pointB;
@@ -210,6 +216,9 @@ public class LIC {
          * with area greater than AREA1.
          * (0 ≤ AREA1)
          */
+        if (parameters.AREA1 < 0) {
+            return false;
+        }
 
         Point pointA;
         Point pointB;
@@ -265,6 +274,12 @@ public class LIC {
          * is in quadrant I.
          * (2 ≤ Q_PTS ≤ NUMPOINTS), (1 ≤ QUADS ≤ 3)
          */
+        if (parameters.QPTS < 2 || parameters.QPTS > points.size()) {
+            return false;
+        }
+        if (parameters.QUADS < 1 || parameters.QUADS > 3) {
+            return false;
+        }
 
         for (int i = 0; i < points.size() - parameters.QPTS; i++) {
 
@@ -558,10 +573,10 @@ public class LIC {
         Point pointB;
         Point pointC;
 
-        for (int i = 0; i < points.size() - 3 - parameters.EPTS - parameters.FPTS; i++) {
+        for (int i = 0; i < points.size() - 2 - parameters.EPTS - parameters.FPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.EPTS); // MAYBE +1 also? Same question as case 8&9)
+            pointB = points.get(i + parameters.EPTS);
             pointC = points.get(i + parameters.EPTS + parameters.FPTS);
 
             // Distance between x-coordinates
@@ -728,150 +743,69 @@ public class LIC {
      * @param Points     list of datapoints
      * @return true or false depending on if condition checks out
      */
-    public static boolean cond13(Parameters Parameters, Points Points) {
+    public static boolean cond13(Parameters parameters, Points points) {
+        /*
+         * There exists at least one set of three data points, separated by exactly
+         * A_PTS and B_PTS consecutive intervening points, respectively, that cannot be
+         * contained within or on a circle of radius RADIUS1. In addition, there exists
+         * at least one set of three data points (which can be the same or different
+         * from the three data points just mentioned) separated by exactly A_PTS
+         * and B_PTS consecutive intervening points, respectively, that can be contained
+         * in or on a circle of radius RADIUS2. Both parts must be true for the LIC to
+         * be true. The condition is not met when NUMPOINTS < 5.
+         * 0 ≤ RADIUS2
+         */
 
-        if (Points.size() < 5) {
+        if (points.size() < 5) {
+            return false;
+        }
+        if (0 <= parameters.RADIUS2) {
             return false;
         }
 
-        Point a1;
-        Point a2;
-        List<Point> points_between_a1_a2 = null;
-        List<Point> points_between_a1_b1 = null;
-        List<Point> points_between_a2_b1 = null;
-        Point b1;
-        double dis_p1_p2;
-        double dis_p1_p3;
-        double dis_p2_p3;
-        double longest_dist1;
-        double longest_dist2;
-        boolean res1 = false;
-        boolean res2 = false;
+        double diameterOne = 2 * parameters.RADIUS1;
+        double diameterTwo = 2 * parameters.RADIUS2;
+        Point pointA;
+        Point pointB;
+        Point pointC;
+        boolean radiusOneCheck = false;
+        boolean radiusTwoCheck = false;
 
-        for (int i = 0; i < Points.size() - 1; i++) {
-            a1 = Points.get(i);
+        for (int i = 0; i < points.size() - 2 - parameters.APTS - parameters.EPTS; i++) {
 
-            for (int l = 0; l < Points.size(); l++) {
-                if (Points.get(l).equals(a1)) {
-                    l++;
-                }
+            pointA = points.get(i);
+            pointB = points.get(i + parameters.APTS);
+            pointC = points.get(i + parameters.APTS + parameters.EPTS);
 
-                a2 = Points.get(l);
-                points_between_a1_a2 = points_inbetween(a1, a2, Points.get_arr());
+            // Distance between x-coordinates
+            double xDistanceAB = Math.abs(pointA.getX() - pointB.getX());
+            double xDistanceBC = Math.abs(pointB.getX() - pointC.getX());
+            double xDistanceCA = Math.abs(pointC.getX() - pointA.getX());
 
-                if (points_between_a1_a2.size() == Parameters.APTS)// Check if points between v1,v2
-                {
-                    for (int j = 0; j < Points.size(); j++) {
+            // Distance between y-coordinates
+            double yDistanceAB = Math.abs(pointA.getY() - pointB.getY());
+            double yDistanceBC = Math.abs(pointB.getY() - pointC.getY());
+            double yDistanceCA = Math.abs(pointC.getY() - pointA.getY());
 
-                        if (Points.get(j).equals(a1) || Points.get(j).equals(a2)) // check that we get a new unique
-                                                                                  // point
-                        {
-                            j++;
-                        }
-                        if (Points.get(j).equals(a1) || Points.get(j).equals(a2)) // do this twice so we make sure to
-                                                                                  // avoid a1 and a2
-                        {
-                            j++;
-                        }
-                        b1 = Points.get(j); // Get new point h1
+            // Distance between the points
+            double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB));
+            double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC));
+            double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA));
 
-                        points_between_a1_b1 = points_inbetween(a1, b1, Points.get_arr()); // get points between a1 and
-                                                                                           // b1
-                        points_between_a2_b1 = points_inbetween(a2, b1, Points.get_arr()); // get points between a2 and
-                                                                                           // b1
-
-                        if (points_between_a1_b1.size() == Parameters.BPTS) {
-                            dis_p1_p2 = lengt_between_points(a1, a2);
-                            dis_p1_p3 = lengt_between_points(a1, b1);
-                            dis_p2_p3 = lengt_between_points(a2, b1);
-                            longest_dist1 = Math.max(dis_p1_p2, dis_p1_p3);
-                            longest_dist2 = Math.max(longest_dist1, dis_p2_p3);
-
-                            if (longest_dist2 > Parameters.RADIUS1 + Parameters.RADIUS1) {
-                                res1 = true;
-                            }
-                        }
-
-                        if (points_between_a2_b1.size() == Parameters.BPTS) {
-                            dis_p1_p2 = lengt_between_points(a1, a2);
-                            dis_p1_p3 = lengt_between_points(a1, b1);
-                            dis_p2_p3 = lengt_between_points(a2, b1);
-                            longest_dist1 = Math.max(dis_p1_p2, dis_p1_p3);
-                            longest_dist2 = Math.max(longest_dist1, dis_p2_p3);
-
-                            if (longest_dist2 > Parameters.RADIUS1 + Parameters.RADIUS1) {
-                                res1 = true;
-                            }
-                        }
-                    }
-                }
-
+            // If the length between some of the points are greater than the diameter, they
+            // can't be within the radius
+            if ((distanceAB > diameterOne) || (distanceBC > diameterOne) || (distanceCA > diameterOne)) {
+                radiusOneCheck = true;
+            }
+            if ((distanceAB > diameterTwo) || (distanceBC > diameterTwo) || (distanceCA > diameterTwo)) {
+                radiusTwoCheck = true;
             }
 
-        }
-
-        for (int i = 0; i < Points.size() - 1; i++) {
-            a1 = Points.get(i);
-
-            for (int l = 0; l < Points.size(); l++) {
-                if (Points.get(l).equals(a1)) {
-                    l++;
-                }
-
-                a2 = Points.get(l);
-                points_between_a1_a2 = points_inbetween(a1, a2, Points.get_arr());
-
-                if (points_between_a1_a2.size() == Parameters.APTS)// Check if points between v1,v2
-                {
-                    for (int j = 0; j < Points.size(); j++) {
-
-                        if (Points.get(j).equals(a1) || Points.get(j).equals(a2)) // check that we get a new unique
-                                                                                  // point
-                        {
-                            j++;
-                        }
-                        if (Points.get(j).equals(a1) || Points.get(j).equals(a2)) // do this twice so we make sure to
-                                                                                  // avoid v1 and v2
-                        {
-                            j++;
-                        }
-                        b1 = Points.get(j); // Get new point h1
-
-                        points_between_a1_b1 = points_inbetween(a1, b1, Points.get_arr()); // get points between h1 and
-                                                                                           // v1
-                        points_between_a2_b1 = points_inbetween(a2, b1, Points.get_arr()); // get points between h1 and
-                                                                                           // v2
-
-                        if (points_between_a1_b1.size() == Parameters.BPTS) {
-                            dis_p1_p2 = lengt_between_points(a1, a2);
-                            dis_p1_p3 = lengt_between_points(a1, b1);
-                            dis_p2_p3 = lengt_between_points(a2, b1);
-                            longest_dist1 = Math.max(dis_p1_p2, dis_p1_p3);
-                            longest_dist2 = Math.max(longest_dist1, dis_p2_p3);
-
-                            if (longest_dist2 <= Parameters.RADIUS2 + Parameters.RADIUS2) {
-                                res2 = true;
-                            }
-                        }
-
-                        if (points_between_a2_b1.size() == Parameters.BPTS) {
-                            dis_p1_p2 = lengt_between_points(a1, a2);
-                            dis_p1_p3 = lengt_between_points(a1, b1);
-                            dis_p2_p3 = lengt_between_points(a2, b1);
-                            longest_dist1 = Math.max(dis_p1_p2, dis_p1_p3);
-                            longest_dist2 = Math.max(longest_dist1, dis_p2_p3);
-
-                            if (longest_dist2 <= Parameters.RADIUS2 + Parameters.RADIUS2) {
-                                res2 = true;
-                            }
-                        }
-                    }
-                }
-
+            if (radiusOneCheck && radiusTwoCheck) {
+                return true;
             }
-
         }
-        return res1 && res2;
+        return false;
     }
 
     /**
