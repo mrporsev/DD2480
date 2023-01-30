@@ -222,35 +222,57 @@ public class assignment1 {
                 POINT k1;
                 POINT k2;
                 double dis1;
+                boolean res = false;
 
 
 
                 for(int i = 0; i < Globals.NUMPOINTS - 1; i++)
                 {
-                    p1 = Points.POINTS[i];
-                    p2 = Points.POINTS[i+1];
-                    points_between = points_inbetween(p1,p2,Points.POINTS);
+                    p1 = Points.POINTS[i]; // Get one data point p1
 
-                    if(points_between.size() == Parameters.K_PTS)
+                    for(int l = 0; l < Globals.NUMPOINTS; l++)
                     {
-                        for(int j = 0; j < points_between.size(); j++)
+                        if(Points.POINTS.equals(p1)) // avoid next data point being the same as p1
                         {
-                            k1 = points_between.get(j);
+                            l++;
+                        }
 
-                                    for(int k = 0; k < points_between.size(); k++)
+                        p2 = Points.POINTS[l]; // get second data point p2
+                        points_between = points_inbetween(p1,p2,Points.POINTS); // get list of points between p1,p2
+
+                        if(points_between.size() == Parameters.K_PTS)
+                        {
+
+                            for(int j = 0; j < points_between.size(); j++)
+                            {
+                                k1 = points_between.get(j); // get point from inbetween list
+
+                                for(int k = 0; k < points_between.size(); k++)
+                                {
+                                    if(points_between.get(k).equals(k1))
                                     {
-                                        k2 = points_between.get(k);
-                                        dis1 = lengt_between_points(k1,k2);
-                                        if(dis1 <= Parameters.LENGTH1 && !k1.equals(k2))
-                                        {
-                                            return false;
-                                        }
+                                        k++;
                                     }
+                                    k2 = points_between.get(k); // get second point from inbetween list
+                                    dis1 = lengt_between_points(k1,k2);
+                                    if(dis1 <= Parameters.LENGTH1 && !k1.equals(k2))
+                                    {
+                                        break;
+                                    }
+                                    if(k == points_between.size() - 1); // if k reaches size - 1 then it means we have found a set
+                                    {
+                                        return true;
+                                    }
+                                }
+
+
+                            }
                         }
                     }
 
+
                 }
-                return true;
+                return false;
 
 
             case 8:
@@ -263,7 +285,278 @@ public class assignment1 {
 
             case 12:
 
+                if(Globals.NUMPOINTS < 3)
+                {
+                    return false;
+                }
+
+                POINT a1;
+                POINT a2;
+                List<POINT> points_between1;
+                POINT b1;
+                POINT b2;
+                double dis2;
+                boolean res1 = false;
+
+
+
+                for(int i = 0; i < Globals.NUMPOINTS - 1; i++)
+                {
+                    if(res1)
+                    {
+                        break;
+                    }
+                    a1 = Points.POINTS[i];
+
+                    for(int l = 0; l < Globals.NUMPOINTS; l++)
+                    {
+                        if(Points.POINTS[l].equals(a1))
+                        {
+                            l++;
+                        }
+
+                        a2 = Points.POINTS[l];
+                        points_between1 = points_inbetween(a1,a2,Points.POINTS);
+
+                        if(points_between1.size() == Parameters.K_PTS)
+                        {
+                            for(int j = 0; j < points_between1.size(); j++)
+                            {
+                                b1 = points_between1.get(j);
+
+                                for(int k = 0; k < points_between1.size(); k++)
+                                {
+                                    b2 = points_between1.get(k);
+                                    dis1 = lengt_between_points(b1,b2);
+                                    if(dis1 <= Parameters.LENGTH1 && !b1.equals(b2))
+                                    {
+                                        res1 = false;
+                                        break;
+                                    }
+
+                                    if(k == points_between1.size() - 1);
+                                    {
+                                        res1 = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+
+                boolean res2 = false;
+
+
+                for(int i = 0; i < Globals.NUMPOINTS - 1; i++)
+                {
+                    if(res2)
+                    {
+                        break;
+                    }
+                    a1 = Points.POINTS[i];
+
+                    for(int l = 0; l < Globals.NUMPOINTS; l++)
+                    {
+                        if(Points.POINTS[l].equals(a1))
+                        {
+                            l++;
+                        }
+                        a2 = Points.POINTS[l];
+                        points_between1 = points_inbetween(a1,a2,Points.POINTS);
+
+                        if(points_between1.size() == Parameters.K_PTS)
+                        {
+                            for(int j = 0; j < points_between1.size(); j++)
+                            {
+                                b1 = points_between1.get(j);
+
+                                for(int k = 0; k < points_between1.size(); k++)
+                                {
+                                    b2 = points_between1.get(k);
+                                    dis1 = lengt_between_points(b1,b2);
+                                    if(dis1 >= Parameters.LENGTH2 && !b1.equals(b2))
+                                    {
+                                        res2 = false;
+                                        break;
+                                    }
+                                    if(k == points_between1.size() - 1);
+                                    {
+                                        res2 = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+
+                return res1 && res2;
+
+
             case 13:
+
+                if(Globals.NUMPOINTS < 5)
+                {
+                    return false;
+                }
+
+                POINT v1;
+                POINT v2;
+                List<POINT> points_between2 = null;
+                List<POINT> points_between3 = null;
+                List<POINT> points_between4 = null;
+                POINT h1;
+                POINT h2;
+                double dis_p1_p2;
+                double dis_p1_p3;
+                double dis_p2_p3;
+                double longest_dist1;
+                double longest_dist2;
+                boolean res3 = false;
+
+
+
+
+                for(int i = 0; i < Globals.NUMPOINTS - 1; i++)
+                {
+                    v1 = Points.POINTS[i];
+
+                    for(int l = 0; l < Globals.NUMPOINTS; l++)
+                    {
+                        if(Points.POINTS[l].equals(v1))
+                        {
+                            l++;
+                        }
+
+                        v2 = Points.POINTS[l];
+                        points_between2 = points_inbetween(v1,v2,Points.POINTS);
+
+                        if(points_between2.size() == Parameters.A_PTS)// Check if points between v1,v2
+                        {
+                            for(int j = 0; j < Globals.NUMPOINTS; j++)
+                            {
+
+                                if(Points.POINTS[j].equals(v1) || Points.POINTS[j].equals(v2)) // check that we get a new unique point
+                                {
+                                    j++;
+                                }
+                                if(Points.POINTS[j].equals(v1) || Points.POINTS[j].equals(v2)) // do this twice so we make sure to avoid v1 and v2
+                                {
+                                    j++;
+                                }
+                                h1 = Points.POINTS[j]; // Get new point h1
+
+                                points_between3 = points_inbetween(v1,h1,Points.POINTS); // get points between h1 and v1
+                                points_between4 = points_inbetween(v2,h1,Points.POINTS); // get points between h1 and v2
+
+
+                                if(points_between3.size() == Parameters.B_PTS)
+                                {
+                                    dis_p1_p2 = lengt_between_points(v1,v2);
+                                    dis_p1_p3 = lengt_between_points(v1,h1);
+                                    dis_p2_p3 = lengt_between_points(v2,h1);
+                                    longest_dist1 = Math.max(dis_p1_p2,dis_p1_p3);
+                                    longest_dist2 = Math.max(longest_dist1,dis_p2_p3);
+
+                                    if(longest_dist2 > Parameters.RADIUS1 + Parameters.RADIUS1)
+                                    {
+                                        res2 = true;
+                                    }
+                                }
+
+                                if(points_between4.size() == Parameters.B_PTS)
+                                {
+                                    dis_p1_p2 = lengt_between_points(v1,v2);
+                                    dis_p1_p3 = lengt_between_points(v1,h1);
+                                    dis_p2_p3 = lengt_between_points(v2,h1);
+                                    longest_dist1 = Math.max(dis_p1_p2,dis_p1_p3);
+                                    longest_dist2 = Math.max(longest_dist1,dis_p2_p3);
+
+                                    if(longest_dist2 > Parameters.RADIUS1 + Parameters.RADIUS1)
+                                    {
+                                        res2 = true;
+                                    }
+                                }
+                            }
+                    }
+
+
+                    }
+
+                }
+
+                for(int i = 0; i < Globals.NUMPOINTS - 1; i++)
+                {
+                    v1 = Points.POINTS[i];
+
+                    for(int l = 0; l < Globals.NUMPOINTS; l++)
+                    {
+                        if(Points.POINTS[l].equals(v1))
+                        {
+                            l++;
+                        }
+
+                        v2 = Points.POINTS[l];
+                        points_between2 = points_inbetween(v1,v2,Points.POINTS);
+
+                        if(points_between2.size() == Parameters.A_PTS)// Check if points between v1,v2
+                        {
+                            for(int j = 0; j < Globals.NUMPOINTS; j++)
+                            {
+
+                                if(Points.POINTS[j].equals(v1) || Points.POINTS[j].equals(v2)) // check that we get a new unique point
+                                {
+                                    j++;
+                                }
+                                if(Points.POINTS[j].equals(v1) || Points.POINTS[j].equals(v2)) // do this twice so we make sure to avoid v1 and v2
+                                {
+                                    j++;
+                                }
+                                h1 = Points.POINTS[j]; // Get new point h1
+
+                                points_between3 = points_inbetween(v1,h1,Points.POINTS); // get points between h1 and v1
+                                points_between4 = points_inbetween(v2,h1,Points.POINTS); // get points between h1 and v2
+
+
+                                if(points_between3.size() == Parameters.B_PTS)
+                                {
+                                    dis_p1_p2 = lengt_between_points(v1,v2);
+                                    dis_p1_p3 = lengt_between_points(v1,h1);
+                                    dis_p2_p3 = lengt_between_points(v2,h1);
+                                    longest_dist1 = Math.max(dis_p1_p2,dis_p1_p3);
+                                    longest_dist2 = Math.max(longest_dist1,dis_p2_p3);
+
+                                    if(longest_dist2 <= Parameters.RADIUS2 + Parameters.RADIUS2)
+                                    {
+                                        res2 = true;
+                                    }
+                                }
+
+                                if(points_between4.size() == Parameters.B_PTS)
+                                {
+                                    dis_p1_p2 = lengt_between_points(v1,v2);
+                                    dis_p1_p3 = lengt_between_points(v1,h1);
+                                    dis_p2_p3 = lengt_between_points(v2,h1);
+                                    longest_dist1 = Math.max(dis_p1_p2,dis_p1_p3);
+                                    longest_dist2 = Math.max(longest_dist1,dis_p2_p3);
+
+                                    if(longest_dist2 <= Parameters.RADIUS2 + Parameters.RADIUS2)
+                                    {
+                                        res2 = true;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+
+                }
+
+
 
             case 14:
 
