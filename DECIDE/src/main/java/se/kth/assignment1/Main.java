@@ -12,11 +12,16 @@ public class Main {
      */
     public static void decide(int numpoints, Points points, Parameters parameters, int[][] LCM, boolean[] PUV) {
 
-        //CMV cmv = new CMV(parameters);
-        //PUM pum = new PUM(LCM, cmv);
-        //FUV fuv = new FUV(pum, PUV);
+        Cmv cmv = new Cmv(new LIC(), parameters, points);
+        Pum pum = new Pum(LCM, cmv);
+        Fuv fuv = new Fuv(pum, PUV);
 
-        //Return LAUNCH ("Yes", "No"), CMV, PUM, FUV
+        boolean decision = true;
+        for (int i = 0; i < 15; i++) {
+            decision = decision && fuv.getElem(i);
+        }
+
+        System.out.println(decision ? "Yes" : "No");
     }
     /**
      * This function does this
