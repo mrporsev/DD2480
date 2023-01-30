@@ -38,6 +38,8 @@ public class Points {
         return points[index];
     }
 
+    public  Point[] get_arr(){ return this.points;}
+
     /**
      * @return the size of the Points object (array)
      */
