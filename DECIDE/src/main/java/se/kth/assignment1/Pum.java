@@ -5,6 +5,8 @@ package se.kth.assignment1;
  */
 public class Pum {
 
+
+
     private boolean[][] pum = new boolean[15][15];
 
     /**
@@ -17,17 +19,7 @@ public class Pum {
      */
     public Pum(int[][] LCM, Cmv CMV) {
         boolean[] cmv = CMV.get();
-
-        for (int i = 0; i < 15 ; i++) {
-            for (int j = 0; j <= i; j++) {
-                switch (LCM[i][j]) {
-                    case 0 : pum[i][j] = true;break;
-                    case 1 : pum[i][j] = cmv[i] && cmv[j];break;
-                    case 2 : pum[i][j] = cmv[i] || cmv[j];break;
-                }
-                pum[i][j] = pum[j][i];
-            }
-        }
+        setPum(LCM, cmv);
     }
 
     /**
@@ -44,5 +36,18 @@ public class Pum {
      */
     public boolean getElem(int i, int j) {
         return pum[i][j];
+    }
+
+    private void setPum(int[][] LCM, boolean[] cmv) {
+        for (int i = 0; i < 15 ; i++) {
+            for (int j = 0; j <= i; j++) {
+                switch (LCM[i][j]) {
+                    case 0 : pum[i][j] = true;break;
+                    case 1 : pum[i][j] = cmv[i] && cmv[j];break;
+                    case 2 : pum[i][j] = cmv[i] || cmv[j];break;
+                }
+                pum[i][j] = pum[j][i];
+            }
+        }
     }
 }
