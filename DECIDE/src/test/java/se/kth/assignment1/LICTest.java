@@ -25,7 +25,17 @@ class LICTest {
 
     @Test
     void cond1() {
-    
+        LIC lic = new LIC();
+        Points points = new Points(3);
+        points.add(new Point(0, 0));
+        points.add(new Point(2, 2));
+        points.add(new Point(4, 4));
+
+        Parameters parameters = new Parameters();
+        parameters.RADIUS1 = 1;
+
+        boolean result = lic.cond1(points, parameters);
+        assertFalse(result);
     }
 
     @Test
