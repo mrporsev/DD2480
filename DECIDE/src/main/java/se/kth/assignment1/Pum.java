@@ -19,7 +19,7 @@ public class Pum {
      */
     public Pum(int[][] LCM, Cmv CMV) {
         boolean[] cmv = CMV.get();
-        setPum(LCM, cmv);
+        this.pum = setPum(LCM, cmv);
     }
 
     /**
@@ -38,16 +38,18 @@ public class Pum {
         return pum[i][j];
     }
 
-    private void setPum(int[][] LCM, boolean[] cmv) {
+    private boolean[][] setPum(int[][] LCM, boolean[] cmv) {
+        boolean[][] p = new boolean[15][15];
         for (int i = 0; i < 15 ; i++) {
             for (int j = 0; j <= i; j++) {
                 switch (LCM[i][j]) {
-                    case 0 : pum[i][j] = true;break;
-                    case 1 : pum[i][j] = cmv[i] && cmv[j];break;
-                    case 2 : pum[i][j] = cmv[i] || cmv[j];break;
+                    case 0 : p[i][j] = true;break;
+                    case 1 : p[i][j] = cmv[i] && cmv[j];break;
+                    case 2 : p[i][j] = cmv[i] || cmv[j];break;
                 }
-                pum[i][j] = pum[j][i];
+                p[i][j] = p[j][i];
             }
         }
+        return p;
     }
 }

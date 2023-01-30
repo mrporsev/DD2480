@@ -7,7 +7,7 @@ public class Fuv {
     public Fuv(Pum pum, boolean[] PUV){
         boolean[][] PUM = pum.getPum();
 
-        setFuv(PUM, PUV);
+        this.fuv = setFuv(PUM, PUV);
     }
 
     public boolean[] getFuv() {
@@ -18,17 +18,19 @@ public class Fuv {
         return fuv[i];
     }
 
-    private void setFuv(boolean[][] PUM, boolean[] PUV) {
+    private boolean[] setFuv(boolean[][] PUM, boolean[] PUV) {
+        boolean[] f = new boolean[15];
         for (int i = 0; i < 15; i++) {
-            if (!PUV[i]) fuv[i] = true;
+            if (!PUV[i]) f[i] = true;
             else {
-                fuv[i] = true;
+                f[i] = true;
                 for (int j = 0; j < 15 ; j++) {
                     if(j != i && !PUM[i][j] ) {
-                        fuv[i] = false;
+                        f[i] = false;
                     }
                 }
             }
         }
+        return f;
     }
 }
