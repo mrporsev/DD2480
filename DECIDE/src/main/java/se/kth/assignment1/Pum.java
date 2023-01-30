@@ -47,7 +47,7 @@ public class Pum {
                     case 1 : p[i][j] = cmv[i] && cmv[j];break;
                     case 2 : p[i][j] = cmv[i] || cmv[j];break;
                 }
-                p[i][j] = p[j][i];
+                p[j][i] = p[i][j];
             }
         }
         return p;
