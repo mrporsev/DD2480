@@ -30,7 +30,14 @@ public class PumTest {
 
     @Test
     void setPum() {
+        Pum PUM = new Pum(LCM, new Cmv());
+        boolean[][] pum = PUM.setPum(LCM, CMV);
 
+        assertTrue(pum[0][0]);
+        assertFalse(pum[0][1]);
+        assertTrue(pum[0][2]);
+        assertTrue(pum[0][4]);
+        assertTrue(pum[7][7]);
     }
 
 }
