@@ -5,6 +5,11 @@ import java.util.List;
 
 public class LIC {
 
+    /**
+     * @param a datapoint a
+     * @param b datapoint
+     * @return distance between a and b
+     */
     static double lengt_between_points(Point a, Point b)
     {
 
@@ -61,6 +66,11 @@ public class LIC {
         return res;
     }
 
+    /**
+     * @param Parameters parameters
+     * @param Points list of datapoints
+     * @return true or false depending on if condition checks out
+     */
     public static boolean cond0(Parameters Parameters, Points Points) {
 
         double dis = 0;
@@ -118,7 +128,13 @@ public class LIC {
         return true;
     }
 
+    /**
+     * @param Parameters parameters
+     * @param Points list of datapoints
+     * @return true or false depending on if condition checks out
+     */
     public static boolean cond7(Parameters Parameters, Points Points) {
+
 
         if(Points.size() < 3)
         {
@@ -204,6 +220,11 @@ public class LIC {
         return true;
     }
 
+    /**
+     * @param Parameters parameters
+     * @param Points list of datapoints
+     * @return true or false depending on if condition checks out
+     */
     public static boolean cond12(Parameters Parameters, Points Points) {
 
         if(Points.size() < 3)
@@ -317,6 +338,11 @@ public class LIC {
         return res1 && res2;
     }
 
+    /**
+     * @param Parameters parameters
+     * @param Points list of datapoints
+     * @return true or false depending on if condition checks out
+     */
     public static boolean cond13(Parameters Parameters, Points Points) {
 
         if(Points.size() < 5)

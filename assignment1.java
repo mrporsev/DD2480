@@ -190,12 +190,12 @@ public class assignment1 {
 
                         if(dis > Parameters.LENGTH1)
                         {
-                            return false;
+                            return true;
                         }
 
                     }
                 }
-                return true;
+                return false;
 
             case 1:
 
