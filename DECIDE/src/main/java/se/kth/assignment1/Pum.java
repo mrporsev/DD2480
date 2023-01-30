@@ -18,7 +18,7 @@ public class Pum {
      * @param CMV Conditions Met Vector
      */
     public Pum(int[][] LCM, Cmv CMV) {
-        boolean[] cmv = CMV.get();
+        boolean[] cmv = CMV.getCmv();
         this.pum = setPum(LCM, cmv);
     }
 
@@ -38,7 +38,7 @@ public class Pum {
         return pum[i][j];
     }
 
-    private boolean[][] setPum(int[][] LCM, boolean[] cmv) {
+    protected boolean[][] setPum(int[][] LCM, boolean[] cmv) {
         boolean[][] p = new boolean[15][15];
         for (int i = 0; i < 15 ; i++) {
             for (int j = 0; j <= i; j++) {

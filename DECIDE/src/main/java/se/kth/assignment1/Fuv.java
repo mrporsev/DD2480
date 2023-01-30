@@ -18,7 +18,7 @@ public class Fuv {
         return fuv[i];
     }
 
-    private boolean[] setFuv(boolean[][] PUM, boolean[] PUV) {
+    protected boolean[] setFuv(boolean[][] PUM, boolean[] PUV) {
         boolean[] f = new boolean[15];
         for (int i = 0; i < 15; i++) {
             if (!PUV[i]) f[i] = true;
