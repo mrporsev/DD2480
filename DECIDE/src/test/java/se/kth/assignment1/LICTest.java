@@ -300,9 +300,18 @@ class LICTest {
         assertFalse(result);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of two data points separated by exactly K PTS consecutive
+     intervening points that are a distance greater than the length, LENGTH1, apart. The condition
+     is not met when NUMPOINTS < 3.
+     1 ≤ K PTS ≤ (NUMPOINTS−2)
+
+     */
     @Test
     void cond7() {
 
+        //Positive case: point 0,0 is LENGHT1 apart from 2,2
         Parameters Parameters = new Parameters();
         Parameters.KPTS = 1;
         Parameters.LENGTH1 = 1;
@@ -316,6 +325,20 @@ class LICTest {
         points.add(point3);
         var test1 = LIC.cond7(Parameters, points);
         assertTrue(test1);
+
+        //Negative case point 0,0 is not LENGHT1 apart from 2,2
+        Parameters.LENGTH1 = 10;
+        Points points1 = new Points(NUMPOINTS);
+        points1.add(new Point(0,0));
+        points1.add(new Point(1,1));
+        points1.add(new Point(2,2));
+        boolean res = LIC.cond7(Parameters, points1);
+        assertFalse(res);
+
+        //Invalid case: NUMPOINTS < 3
+        Points points2 = new Points(2);
+        res = LIC.cond7(Parameters, points2);
+        assertFalse(res);
     }
 
     @Test
