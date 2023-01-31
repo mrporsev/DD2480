@@ -155,7 +155,7 @@ public class LIC {
 
             // The angle of the second point (B)
             double angle = Math
-                    .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) + (distanceCA * distanceCA))
+                    .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) - (distanceCA * distanceCA))
                             / (2 * distanceAB * distanceBC));
 
             if ((angle < (Math.PI - parameters.EPSILON)) || (angle > (Math.PI + parameters.EPSILON))) {
@@ -370,7 +370,7 @@ public class LIC {
         Point a2 = null;
         double dis;
 
-        for (int i = 0; i < Points.size() - 2 - Parameters.KPTS; i++) {
+        for (int i = 0; i < Points.size() - Parameters.KPTS; i++) {
             a1 = Points.get(i);
             a2 = Points.get(i + Parameters.KPTS);
             dis = lengt_between_points(a1, a2);
@@ -620,7 +620,7 @@ public class LIC {
         boolean res2 = false;
         double dis;
 
-        for (int i = 0; i < Points.size() - 2 - Parameters.KPTS; i++) {
+        for (int i = 0; i < Points.size() - Parameters.KPTS; i++) {
 
             a1 = Points.get(i);
             a2 = Points.get(i + Parameters.KPTS);
@@ -632,12 +632,12 @@ public class LIC {
 
         }
 
-        for (int i = 0; i < Points.size() - 2 - Parameters.KPTS; i++) {
+        for (int i = 0; i < Points.size() - Parameters.KPTS; i++) {
             a1 = Points.get(i);
             a2 = Points.get(i + Parameters.KPTS);
             dis = lengt_between_points(a1, a2);
 
-            if (dis < Parameters.LENGTH1) {
+            if (dis < Parameters.LENGTH2) {
                 res2 = true;
             }
 
