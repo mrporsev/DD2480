@@ -68,8 +68,8 @@ class LICTest {
     void cond5() {
         LIC lic = new LIC();
         Points points = new Points(2);
-        points.add(new Point(0, 0));
-        points.add(new Point(3, 3));
+        points.add(new Point(1, 1));
+        points.add(new Point(2, 2));
 
         Parameters parameters = new Parameters();
 
