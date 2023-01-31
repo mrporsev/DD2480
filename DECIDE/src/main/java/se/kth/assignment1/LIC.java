@@ -44,9 +44,7 @@ public class LIC {
                 next_point = Points.get(j);
                 dis = lengt_between_points(cur_point, next_point);
 
-
-                if(dis > Parameters.LENGTH1)
-                {
+                if (dis > Parameters.LENGTH1) {
                     return true;
                 }
 
@@ -56,8 +54,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond1(Points points, Parameters parameters) {
@@ -69,6 +67,9 @@ public class LIC {
          * The same as saying that the distance between a point and every other can't be
          * bigger than the diameter?
          */
+        if (parameters.RADIUS1 < 0) {
+            return false;
+        }
 
         double diameter = 2 * parameters.RADIUS1;
         Point pointA;
@@ -99,15 +100,15 @@ public class LIC {
             // If the length between some of the points are greater than the diameter, they
             // can't be within the radius
             if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
-                return false;
+                return true;
             }
         }
         return false;
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond2(Points points, Parameters parameters) {
@@ -123,6 +124,9 @@ public class LIC {
          * the angle is undefined and the LIC is not satisfied by those three points.
          * (0 ≤ EPSILON < PI)
          */
+        if (parameters.EPSILON < 0 || parameters.EPSILON >= Math.PI) {
+            return false;
+        }
 
         Point pointA;
         Point pointB;
@@ -162,8 +166,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond3(Points points, Parameters parameters) {
@@ -173,6 +177,9 @@ public class LIC {
          * with area greater than AREA1.
          * (0 ≤ AREA1)
          */
+        if (parameters.AREA1 < 0) {
+            return false;
+        }
 
         Point pointA;
         Point pointB;
@@ -211,8 +218,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond4(Points points, Parameters parameters) {
@@ -228,6 +235,12 @@ public class LIC {
          * is in quadrant I.
          * (2 ≤ Q_PTS ≤ NUMPOINTS), (1 ≤ QUADS ≤ 3)
          */
+        if (parameters.QPTS < 2 || parameters.QPTS > points.size()) {
+            return false;
+        }
+        if (parameters.QUADS < 1 || parameters.QUADS > 3) {
+            return false;
+        }
 
         for (int i = 0; i < points.size() - parameters.QPTS; i++) {
 
@@ -278,8 +291,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond5(Points points, Parameters parameters) {
@@ -303,9 +316,43 @@ public class LIC {
         return false;
     }
 
-    public static boolean cond6() {
+    /**
+     * @param parameters
+     * @param points
+     * @return if There exists at least one set of N PTS consecutive data points such that at least one of the points lies a distance greater than DIST
+     * from the line joining the first and last of these N PTS points. If the first and last points of these N PTS are identical, then the calculated
+     * distance to compare with DIST will be the distance from the coincident point to all other points of the N PTS consecutive points.
+     */
+    public static boolean cond6(Parameters parameters, Points points) {
+        if (points.size() < 3 || !(3 <= parameters.NPTS) || !(parameters.NPTS <= points.size() )) return false;
 
-        return true;
+        Point[] points_arr = points.get_arr();
+
+        //iterate over possible sets
+        for (int i = 0; i < points.size() - parameters.NPTS + 1; i++) {
+            if (points_arr[i].getX() == points_arr[i + parameters.NPTS - 1].getX() && points_arr[i].getY() == points_arr[i + parameters.NPTS - 1].getY()) {
+                for (int j = i + 1; j < i + parameters.NPTS - 1 ; j++) {
+                    if(lengt_between_points(points_arr[i], points_arr[j]) >= parameters.DIST) return true;
+                }
+
+            } else {
+                double x1 = points_arr[i].getX();
+                double y1 =  points_arr[i].getY();
+
+                double x2 = points_arr[i + parameters.NPTS - 1].getX();
+                double y2 = points_arr[i + parameters.NPTS - 1].getY();
+
+                for (int j = i + 1; j < i + parameters.NPTS - 1 ; j++) {
+                    double x0 = points_arr[j].getX();
+                    double y0 = points_arr[j].getY();
+
+                    double d = Math.abs((x2 - x1)*(y1 - y0) - (x1 - x0)*(y2 - y1)) / Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1)*(y2 - y1));
+
+                    if(d > parameters.DIST) return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -333,12 +380,12 @@ public class LIC {
             }
 
         }
-    return false;
+        return false;
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond8(Points points, Parameters parameters) {
@@ -397,8 +444,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond9(Points points, Parameters parameters) {
@@ -463,8 +510,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond10(Points points, Parameters parameters) {
@@ -489,10 +536,10 @@ public class LIC {
         Point pointB;
         Point pointC;
 
-        for (int i = 0; i < points.size() - 3 - parameters.EPTS - parameters.FPTS; i++) {
+        for (int i = 0; i < points.size() - 2 - parameters.EPTS - parameters.FPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.EPTS); // MAYBE +1 also? Same question as case 8&9)
+            pointB = points.get(i + parameters.EPTS);
             pointC = points.get(i + parameters.EPTS + parameters.FPTS);
 
             // Distance between x-coordinates
@@ -522,8 +569,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond11(Points points, Parameters parameters) {
@@ -563,9 +610,7 @@ public class LIC {
      */
     public static boolean cond12(Parameters Parameters, Points Points) {
 
-
-        if(Points.size() < 3 || Parameters.LENGTH2 < 0)
-        {
+        if (Points.size() < 3 || Parameters.LENGTH2 < 0) {
             return false;
         }
 
@@ -580,7 +625,6 @@ public class LIC {
             a1 = Points.get(i);
             a2 = Points.get(i + Parameters.KPTS);
             dis = lengt_between_points(a1, a2);
-
 
             if (dis > Parameters.LENGTH1) {
                 res1 = true;
@@ -601,19 +645,79 @@ public class LIC {
         return res1 && res2;
     }
 
-
     /**
      * @param Parameters parameters
      * @param Points     list of datapoints
      * @return true or false depending on if condition checks out
      */
-    public static boolean cond13(Parameters Parameters, Points Points) {
-       return true;
+    public static boolean cond13(Parameters parameters, Points points) {
+        /*
+         * There exists at least one set of three data points, separated by exactly
+         * A_PTS and B_PTS consecutive intervening points, respectively, that cannot be
+         * contained within or on a circle of radius RADIUS1. In addition, there exists
+         * at least one set of three data points (which can be the same or different
+         * from the three data points just mentioned) separated by exactly A_PTS
+         * and B_PTS consecutive intervening points, respectively, that can be contained
+         * in or on a circle of radius RADIUS2. Both parts must be true for the LIC to
+         * be true. The condition is not met when NUMPOINTS < 5.
+         * 0 ≤ RADIUS2
+         */
+
+        if (points.size() < 5) {
+            return false;
+        }
+        if (0 <= parameters.RADIUS2) {
+            return false;
+        }
+
+        double diameterOne = 2 * parameters.RADIUS1;
+        double diameterTwo = 2 * parameters.RADIUS2;
+        Point pointA;
+        Point pointB;
+        Point pointC;
+        boolean radiusOneCheck = false;
+        boolean radiusTwoCheck = false;
+
+        for (int i = 0; i < points.size() - 2 - parameters.APTS - parameters.EPTS; i++) {
+
+            pointA = points.get(i);
+            pointB = points.get(i + parameters.APTS);
+            pointC = points.get(i + parameters.APTS + parameters.EPTS);
+
+            // Distance between x-coordinates
+            double xDistanceAB = Math.abs(pointA.getX() - pointB.getX());
+            double xDistanceBC = Math.abs(pointB.getX() - pointC.getX());
+            double xDistanceCA = Math.abs(pointC.getX() - pointA.getX());
+
+            // Distance between y-coordinates
+            double yDistanceAB = Math.abs(pointA.getY() - pointB.getY());
+            double yDistanceBC = Math.abs(pointB.getY() - pointC.getY());
+            double yDistanceCA = Math.abs(pointC.getY() - pointA.getY());
+
+            // Distance between the points
+            double distanceAB = Math.sqrt((xDistanceAB * xDistanceAB) + (yDistanceAB * yDistanceAB));
+            double distanceBC = Math.sqrt((xDistanceBC * xDistanceBC) + (yDistanceBC * yDistanceBC));
+            double distanceCA = Math.sqrt((xDistanceCA * xDistanceCA) + (yDistanceCA * yDistanceCA));
+
+            // If the length between some of the points are greater than the diameter, they
+            // can't be within the radius
+            if ((distanceAB > diameterOne) || (distanceBC > diameterOne) || (distanceCA > diameterOne)) {
+                radiusOneCheck = true;
+            }
+            if ((distanceAB > diameterTwo) || (distanceBC > diameterTwo) || (distanceCA > diameterTwo)) {
+                radiusTwoCheck = true;
+            }
+
+            if (radiusOneCheck && radiusTwoCheck) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond14(Points points, Parameters parameters) {
