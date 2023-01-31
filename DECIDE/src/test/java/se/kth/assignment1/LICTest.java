@@ -63,8 +63,16 @@ class LICTest {
         assertFalse(test3);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     * There exists at least one set of three consecutive data points that cannot all be contained
+     * within or on a circle of radius RADIUS1.
+     * (0 ≤ RADIUS1)
+     */
     @Test
     void cond1() {
+
+        //Positve test case: The points are cointained in the AREA1
         LIC lic = new LIC();
         Points points = new Points(3);
         points.add(new Point(0, 0));
@@ -76,6 +84,16 @@ class LICTest {
 
         boolean result = lic.cond1(points, parameters);
         assertTrue(result);
+
+        //Negative test case: The points are not cointained in the AREA1
+        parameters.RADIUS1 = 100;
+        result =lic.cond1(points,parameters);
+        assertFalse(result);
+
+        //invalid input test
+        parameters.RADIUS1 = -1;
+        result =lic.cond1(points,parameters);
+        assertFalse(result);
     }
 
     @Test
@@ -142,10 +160,15 @@ class LICTest {
     }
 
     /**
-     * Testing condition 3 with triangle area equal to AREA1, should give false
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three consecutive data points that are the vertices of a triangle
+     with area greater than AREA1.
+     (0 ≤ AREA1)
      */
     @Test
     void cond3() {
+
+        //False case: area = AREA1
         LIC lic = new LIC();
         Points points = new Points(3);
         points.add(new Point(0, 0));
@@ -156,6 +179,16 @@ class LICTest {
         parameters.AREA1 = 9;
 
         boolean result = lic.cond3(points, parameters);
+        assertFalse(result);
+
+        //Positive case: area > AREA1
+        parameters.AREA1 = 1;
+        result = lic.cond3(points, parameters);
+        assertTrue(result);
+
+        //Invalid input case:  AREA1 = -1
+        parameters.AREA1 = -1;
+        result = lic.cond3(points, parameters);
         assertFalse(result);
 
     }
