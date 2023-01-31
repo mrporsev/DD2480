@@ -95,10 +95,32 @@ class LICTest {
 
     @Test
     void cond4() {
+        LIC lic = new LIC();
+        Points points = new Points(4);
+        points.add(new Point(1, 1));
+        points.add(new Point(-1, 1));
+        points.add(new Point(-1, -1));
+        points.add(new Point(1, -1));
+
+        Parameters parameters = new Parameters();
+        parameters.QPTS = 3;
+        parameters.QUADS = 2;
+
+        boolean result = lic.cond4(points, parameters);
+        assertTrue(result);
     }
 
     @Test
     void cond5() {
+        LIC lic = new LIC();
+        Points points = new Points(2);
+        points.add(new Point(1, 1));
+        points.add(new Point(2, 2));
+
+        Parameters parameters = new Parameters();
+
+        boolean result = lic.cond5(points, parameters);
+        assertTrue(result);
     }
 
     @Test
@@ -166,6 +188,21 @@ class LICTest {
 
     @Test
     void cond9() {
+        LIC lic = new LIC();
+        Points points = new Points(5);
+        points.add(new Point(0, 0));
+        points.add(new Point(1, 0));
+        points.add(new Point(2, 2));
+        points.add(new Point(2, 2));
+        points.add(new Point(3, 0));
+
+        Parameters parameters = new Parameters();
+        parameters.EPSILON = 1;
+        parameters.CPTS = 1;
+        parameters.DPTS = 1;
+
+        boolean result = lic.cond9(points, parameters);
+        assertTrue(result);
     }
 
     @Test

@@ -257,17 +257,17 @@ public class LIC {
                 }
 
                 // Second quadrant (x < 0 and y >= 0)
-                else if ((xCoordinateQthPoint.getX() >= 0) && (yCoordinateQthPoint.getY() >= 0)) {
+                else if ((xCoordinateQthPoint.getX() < 0) && (yCoordinateQthPoint.getY() >= 0)) {
                     existsInQuadrant[1] = true;
                 }
 
                 // Third quadrant (x <= 0 and y < 0)
-                else if ((xCoordinateQthPoint.getX() <= 0) && (yCoordinateQthPoint.getY() >= 0)) {
+                else if ((xCoordinateQthPoint.getX() <= 0) && (yCoordinateQthPoint.getY() < 0)) {
                     existsInQuadrant[2] = true;
                 }
 
                 // Fourth quadrant (x >= 0 and y < 0)
-                else if ((xCoordinateQthPoint.getX() >= 0) && (yCoordinateQthPoint.getY() >= 0)) {
+                else if ((xCoordinateQthPoint.getX() > 0) && (yCoordinateQthPoint.getY() < 0)) {
                     existsInQuadrant[3] = true;
                 }
             }
@@ -275,7 +275,7 @@ public class LIC {
             int numberOfPointsInQuadrants = 0;
 
             // Checks number of data points existing in quadrants
-            for (int j = 0; i < existsInQuadrant.length; j++) {
+            for (int j = 0; j < existsInQuadrant.length; j++) {
 
                 if (existsInQuadrant[j] == true) {
                     numberOfPointsInQuadrants++;
@@ -319,36 +319,46 @@ public class LIC {
     /**
      * @param parameters
      * @param points
-     * @return if There exists at least one set of N PTS consecutive data points such that at least one of the points lies a distance greater than DIST
-     * from the line joining the first and last of these N PTS points. If the first and last points of these N PTS are identical, then the calculated
-     * distance to compare with DIST will be the distance from the coincident point to all other points of the N PTS consecutive points.
+     * @return if There exists at least one set of N PTS consecutive data points
+     *         such that at least one of the points lies a distance greater than
+     *         DIST
+     *         from the line joining the first and last of these N PTS points. If
+     *         the first and last points of these N PTS are identical, then the
+     *         calculated
+     *         distance to compare with DIST will be the distance from the
+     *         coincident point to all other points of the N PTS consecutive points.
      */
     public static boolean cond6(Parameters parameters, Points points) {
-        if (points.size() < 3 || !(3 <= parameters.NPTS) || !(parameters.NPTS <= points.size() )) return false;
+        if (points.size() < 3 || !(3 <= parameters.NPTS) || !(parameters.NPTS <= points.size()))
+            return false;
 
         Point[] points_arr = points.get_arr();
 
-        //iterate over possible sets
+        // iterate over possible sets
         for (int i = 0; i < points.size() - parameters.NPTS + 1; i++) {
-            if (points_arr[i].getX() == points_arr[i + parameters.NPTS - 1].getX() && points_arr[i].getY() == points_arr[i + parameters.NPTS - 1].getY()) {
-                for (int j = i + 1; j < i + parameters.NPTS - 1 ; j++) {
-                    if(lengt_between_points(points_arr[i], points_arr[j]) >= parameters.DIST) return true;
+            if (points_arr[i].getX() == points_arr[i + parameters.NPTS - 1].getX()
+                    && points_arr[i].getY() == points_arr[i + parameters.NPTS - 1].getY()) {
+                for (int j = i + 1; j < i + parameters.NPTS - 1; j++) {
+                    if (lengt_between_points(points_arr[i], points_arr[j]) >= parameters.DIST)
+                        return true;
                 }
 
             } else {
                 double x1 = points_arr[i].getX();
-                double y1 =  points_arr[i].getY();
+                double y1 = points_arr[i].getY();
 
                 double x2 = points_arr[i + parameters.NPTS - 1].getX();
                 double y2 = points_arr[i + parameters.NPTS - 1].getY();
 
-                for (int j = i + 1; j < i + parameters.NPTS - 1 ; j++) {
+                for (int j = i + 1; j < i + parameters.NPTS - 1; j++) {
                     double x0 = points_arr[j].getX();
                     double y0 = points_arr[j].getY();
 
-                    double d = Math.abs((x2 - x1)*(y1 - y0) - (x1 - x0)*(y2 - y1)) / Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1)*(y2 - y1));
+                    double d = Math.abs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1))
+                            / Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 
-                    if(d > parameters.DIST) return true;
+                    if (d > parameters.DIST)
+                        return true;
                 }
             }
         }
@@ -476,7 +486,7 @@ public class LIC {
         Point pointB;
         Point pointC;
 
-        for (int i = 0; i < points.size() - 3 - parameters.CPTS - parameters.DPTS; i++) {
+        for (int i = 0; i < points.size() - 2 - parameters.CPTS - parameters.DPTS; i++) {
 
             pointA = points.get(i);
             pointB = points.get(i + parameters.CPTS); // The vertex (MAYBE +1 also? Same question as case 8)
@@ -499,7 +509,7 @@ public class LIC {
 
             // The angle of the second point (B)
             double angle = Math
-                    .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) + (distanceCA * distanceCA))
+                    .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) - (distanceCA * distanceCA))
                             / (2 * distanceAB * distanceBC));
 
             if ((angle < (Math.PI - parameters.EPSILON)) || (angle > (Math.PI + parameters.EPSILON))) {
