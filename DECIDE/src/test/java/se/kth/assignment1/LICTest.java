@@ -162,19 +162,52 @@ class LICTest {
 
     @Test
     void cond4() {
+        /*
+         * Tests condition 4 and whether there exists at least one set of Q_PTS
+         * consecutive data points that lie in more than QUADS quadrants.
+         * The test should return true.
+         */
         LIC lic = new LIC();
+        Parameters parameters = new Parameters();
         Points points = new Points(4);
         points.add(new Point(1, 1));
         points.add(new Point(-1, 1));
         points.add(new Point(-1, -1));
         points.add(new Point(1, -1));
-
-        Parameters parameters = new Parameters();
         parameters.QPTS = 3;
         parameters.QUADS = 2;
-
         boolean result = lic.cond4(points, parameters);
         assertTrue(result);
+
+        /*
+         * Tests condition 4 and whether there exists at least one set of Q_PTS
+         * consecutive data points that lie in more than QUADS quadrants.
+         * The test should return false since all four points lie in the same quadrant.
+         */
+        Points points2 = new Points(4);
+        points2.add(new Point(1, 1));
+        points2.add(new Point(1, 0));
+        points2.add(new Point(0, 1));
+        points2.add(new Point(1, 1));
+        parameters.QPTS = 3;
+        parameters.QUADS = 2;
+        boolean result2 = lic.cond4(points2, parameters);
+        assertFalse(result2);
+
+        /*
+         * Tests condition 4 and the correctnes of input. Should return false since the
+         * condition 1 <= QUADS <= 3 needs to be fulfilled. In this case QUADS=4 so
+         * it should return false.
+         */
+        Points points3 = new Points(4);
+        points3.add(new Point(1, 1));
+        points3.add(new Point(-1, 1));
+        points3.add(new Point(-1, -1));
+        points3.add(new Point(1, -1));
+        parameters.QPTS = 3;
+        parameters.QUADS = 4;
+        boolean result3 = lic.cond4(points3, parameters);
+        assertFalse(result3);
     }
 
     @Test
