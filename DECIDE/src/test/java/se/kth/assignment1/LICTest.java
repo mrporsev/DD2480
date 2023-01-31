@@ -243,8 +243,15 @@ class LICTest {
         assertFalse(result3);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
+     that X[j] - X[i] < 0. (where i = j-1)
+     */
     @Test
     void cond5() {
+
+        //Positive case: 1-2 = -1 < 0
         LIC lic = new LIC();
         Points points = new Points(2);
         points.add(new Point(1, 1));
@@ -254,6 +261,21 @@ class LICTest {
 
         boolean result = lic.cond5(points, parameters);
         assertTrue(result);
+
+        //Negative case: 2-1 = 1 > 0
+        Points points2 = new Points(2);
+        points2.add(new Point(2, 2));
+        points2.add(new Point(1, 1));
+        result = lic.cond5(points2, parameters);
+        assertFalse(result);
+
+        //Invalid case: NUMPOINTS < 2
+        Points points3 = new Points(1);
+        points3.add(new Point(1,1));
+        result = lic.cond5(points3, parameters);
+        assertFalse(result);
+
+
     }
 
     @Test
