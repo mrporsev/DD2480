@@ -747,7 +747,7 @@ public class LIC {
         if (points.size() < 5) {
             return false;
         }
-        if (parameters.AREA2 >= 0) {
+        if (parameters.AREA2 <= 0) {
             return false;
         }
 
@@ -785,7 +785,7 @@ public class LIC {
             if (area > parameters.AREA1) {
                 firstAreaCheck = true;
             }
-            if (area > parameters.AREA2) {
+            if (area < parameters.AREA2) {
                 secondAreaCheck = true;
             }
             if (firstAreaCheck && secondAreaCheck) {
