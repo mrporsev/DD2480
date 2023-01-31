@@ -1,9 +1,8 @@
 # DD2480 - Launch Interceptor Program
-## A project by [4 KTH students](#developers-and-their-main-contributions) on  a hypothetical anti-ballistic missile system, that contains a function called DECIDE(). The project is written in Java and uses the build automation tool Gradle as well as JUnit as testing framework.
+#### A project by [4 KTH students](#developers-and-their-main-contributions) on  a hypothetical anti-ballistic missile system, that contains a function called DECIDE(). The project is written in Java and uses the build automation tool Gradle as well as JUnit as testing framework.
 
 ## Git Commit Message Template
-## `type(domain): Description #issuenumber`
-
+### `type(domain): Description #issuenumber`
 ### Types
 - `build`: Changes that affect the build system or external dependencies (example scopes: broccoli, npm).
 - `docs`: Documentation only changes.
