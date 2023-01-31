@@ -25,15 +25,39 @@ class LICTest {
 
     @Test
     void cond1() {
-    
+        LIC lic = new LIC();
+        Points points = new Points(3);
+        points.add(new Point(0, 0));
+        points.add(new Point(2, 2));
+        points.add(new Point(4, 4));
+
+        Parameters parameters = new Parameters();
+        parameters.RADIUS1 = 1;
+
+        boolean result = lic.cond1(points, parameters);
+        assertFalse(result);
     }
 
     @Test
     void cond2() {
     }
 
+    /**
+     * Testing condition 3 with triangle area equal to AREA1, should give false
+     */
     @Test
     void cond3() {
+        LIC lic = new LIC();
+        Points points = new Points(3);
+        points.add(new Point(0, 0));
+        points.add(new Point(3, 0));
+        points.add(new Point(0, 3));
+
+        Parameters parameters = new Parameters();
+        parameters.AREA1 = 9;
+
+        boolean result = lic.cond3(points, parameters);
+        assertFalse(result);
     }
 
     @Test

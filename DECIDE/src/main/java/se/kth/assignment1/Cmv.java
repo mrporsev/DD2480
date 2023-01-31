@@ -40,7 +40,7 @@ public class Cmv {
             case 13:
                 cmv[i] = lic.cond13(parameters, points);
             case 14:
-                cmv[i] = lic.cond14();
+                cmv[i] = lic.cond14(points, parameters);
         }
     }
     return cmv;
