@@ -1,5 +1,7 @@
 package se.kth.assignment1;
 
+import java.util.Arrays;
+
 public class Main {
 
     /**
@@ -16,6 +18,10 @@ public class Main {
         Pum pum = new Pum(LCM, cmv);
         Fuv fuv = new Fuv(pum, PUV);
 
+        System.out.println(Arrays.toString(cmv.getCmv()));
+
+        System.out.println(Arrays.toString(fuv.getFuv()));
+
         boolean decision = true;
         for (int i = 0; i < 15; i++) {
             decision = decision && fuv.getElem(i);
@@ -29,11 +35,46 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        Parameters parameters = new Parameters();
-        int numpoints = 10;
+        Parameters parameters = new Parameters(
+                3,
+                0.0,
+                1.0,
+                2.0,
+                6,
+                5,
+                3,
+                3,
+                1,
+                0,
+                3,
+                5,
+                0,
+                0,
+                5,
+                0,
+                5,
+                1.0,
+                1.9
+        );
+        int numpoints = 7;
         Points points = new Points(numpoints);
+        points.add(new Point(0,0));
+        points.add(new Point(10,10));
+        points.add(new Point(1,1));
+        points.add(new Point(2,2));
+        points.add(new Point(1.1,1.1));
+        points.add(new Point(2,2));
+        points.add(new Point(3,0));
+
         int[][] LCM = new int[15][15];
-        boolean[] PUV = new boolean[15];
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j <= i ; j++) {
+                LCM[i][j] = (i == 0 || i == 2 || i == 12 || j == 0 || j == 2 || j == 12) ? 2 : 0;
+                LCM[j][i] = LCM[i][j];
+            }
+        }
+        System.out.println(Arrays.deepToString(LCM));
+        boolean[] PUV = new boolean[] {true, false, true, false, false, false, false, false, false, false, false, false, true, false, false};
 
         decide(numpoints, points, parameters, LCM, PUV);
     }
