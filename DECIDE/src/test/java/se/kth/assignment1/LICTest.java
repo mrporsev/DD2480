@@ -47,6 +47,18 @@ class LICTest {
 
     @Test
     void cond2() {
+
+        Parameters Parameters = new Parameters();
+        Parameters.EPSILON = 2;
+        int NUMPOINTS = 2;
+        Points points = new Points(NUMPOINTS);
+        Point point1 = new Point(5,0);
+        Point point2 = new Point(5,10);
+        points.add(point1);
+        points.add(point2);
+        var test1=LIC.cond0(Parameters,points);
+        assertTrue(test1);
+
     }
 
     @Test
