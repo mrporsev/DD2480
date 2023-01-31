@@ -60,13 +60,17 @@ class LICTest {
 
         Parameters Parameters = new Parameters();
         Parameters.EPSILON = 2;
-        int NUMPOINTS = 2;
+        int NUMPOINTS = 3;
         Points points = new Points(NUMPOINTS);
-        Point point1 = new Point(5,0);
-        Point point2 = new Point(5,10);
+        Point point1 = new Point(0,0);
+        Point point2 = new Point(5,5);
+        Point point3 = new Point(10,0);
+
         points.add(point1);
         points.add(point2);
-        var test1=LIC.cond0(Parameters,points);
+        points.add(point3);
+
+        var test1=LIC.cond2(points,Parameters);
         assertTrue(test1);
 
     }
@@ -115,12 +119,33 @@ class LICTest {
         points.add(point1);
         points.add(point2);
         points.add(point3);
-        var test1=LIC.cond0(Parameters,points);
+        var test1=LIC.cond7(Parameters,points);
         assertTrue(test1);
     }
 
     @Test
     void cond8() {
+
+        Parameters Parameters = new Parameters();
+        Parameters.APTS = 1;
+        Parameters.BPTS = 1;
+        Parameters.RADIUS1 = 1;
+        int NUMPOINTS = 5;
+        Points points = new Points(NUMPOINTS);
+        Point point1 = new Point(100,100);
+        Point point2 = new Point(0,0);
+        Point point3 = new Point(-100,-100);
+        Point point4 = new Point(1,1);
+        Point point5 = new Point(50,50);
+
+        points.add(point1);
+        points.add(point2);
+        points.add(point3);
+        points.add(point4);
+        points.add(point5);
+
+        var test1=LIC.cond0(Parameters,points);
+        assertTrue(test1);
     }
 
     @Test
@@ -140,7 +165,7 @@ class LICTest {
         Parameters Parameters = new Parameters();
         Parameters.KPTS = 1;
         Parameters.LENGTH1 = 1;
-        Parameters.LENGTH2 = 1;
+        Parameters.LENGTH2 = 5;
         int NUMPOINTS = 4;
         Points points = new Points(NUMPOINTS);
         Point point1 = new Point(0,0);
@@ -153,7 +178,7 @@ class LICTest {
         points.add(point3);
         points.add(point4);
 
-        var test1=LIC.cond0(Parameters,points);
+        var test1=LIC.cond12(Parameters,points);
         assertTrue(test1);
     }
 
