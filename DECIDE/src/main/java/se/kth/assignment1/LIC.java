@@ -25,45 +25,6 @@ public class LIC {
     }
 
     /**
-     *
-     * @param a   data point a
-     * @param b   data point b
-     * @param arr array of data points
-     * @return array of datapoints that lie between a and b
-     */
-    static List<Point> points_inbetween(Point a, Point b, Point[] arr) // Checks if there exists any points in the list
-                                                                       // c inbetween two points a and b.
-    {
-        double x_a = a.getX();
-        double y_a = a.getY();
-        double x_b = b.getX();
-        double y_b = b.getY();
-        Point c;
-
-        double dist_a_c = 0;
-        double dist_b_c = 0;
-        double dist_a_b = lengt_between_points(a, b);
-        List<Point> res = new ArrayList<Point>();
-
-        for (int i = 0; i < arr.length; i++) {
-            c = arr[i];
-
-            if (c.equals(a) || c.equals(b)) {
-                break;
-            }
-
-            dist_a_c = lengt_between_points(a, c);
-            dist_b_c = lengt_between_points(b, c);
-
-            if (dist_a_c + dist_b_c == dist_a_b) {
-                res.add(c);
-            }
-
-        }
-        return res;
-    }
-
-    /**
      * @param Parameters parameters
      * @param Points     list of datapoints
      * @return true or false depending on if condition checks out
@@ -84,12 +45,12 @@ public class LIC {
                 dis = lengt_between_points(cur_point, next_point);
 
                 if (dis > Parameters.LENGTH1) {
-                    return false;
+                    return true;
                 }
 
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -367,53 +328,21 @@ public class LIC {
      */
     public static boolean cond7(Parameters Parameters, Points Points) {
 
-        if (Points.size() < 3) {
+        if (Points.size() < 3 || Parameters.KPTS < 1 || Parameters.KPTS > Points.size() - 2) {
             return false;
         }
 
-        Point a1;
-        Point a2;
-        List<Point> points_between;
-        Point b1;
-        Point b2;
+        Point a1 = null;
+        Point a2 = null;
         double dis;
-        boolean res = false;
 
-        for (int i = 0; i < Points.size() - 1; i++) {
-            a1 = Points.get(i); // Get one data point p1
+        for (int i = 0; i < Points.size() - 2 - Parameters.KPTS; i++) {
+            a1 = Points.get(i);
+            a2 = Points.get(i + Parameters.KPTS);
+            dis = lengt_between_points(a1, a2);
 
-            for (int l = 0; l < Points.size(); l++) {
-                if (Points.equals(a1)) // avoid next data point being the same as p1
-                {
-                    l++;
-                }
-
-                a2 = Points.get(l); // get second data point p2
-                points_between = points_inbetween(a1, a2, Points.get_arr()); // get list of points between p1,p2
-
-                if (points_between.size() == Parameters.KPTS) {
-
-                    for (int j = 0; j < points_between.size(); j++) {
-                        b1 = points_between.get(j); // get point from inbetween list
-
-                        for (int k = 0; k < points_between.size(); k++) {
-                            if (points_between.get(k).equals(b1)) {
-                                k++;
-                            }
-                            b2 = points_between.get(k); // get second point from inbetween list
-                            dis = lengt_between_points(b1, b2);
-                            if (dis <= Parameters.LENGTH1 && !b1.equals(b2)) {
-                                break;
-                            }
-                            if (k == points_between.size() - 1)
-                                ; // if k reaches size - 1 then it means we have found a set
-                            {
-                                return true;
-                            }
-                        }
-
-                    }
-                }
+            if (dis > Parameters.LENGTH1) {
+                return true;
             }
 
         }
@@ -647,94 +576,38 @@ public class LIC {
      */
     public static boolean cond12(Parameters Parameters, Points Points) {
 
-        if (Points.size() < 3) {
+        if (Points.size() < 3 || Parameters.LENGTH2 < 0) {
             return false;
         }
 
-        Point a1;
-        Point a2;
-        List<Point> points_between1;
-        Point b1;
-        Point b2;
-        double dis;
+        Point a1 = null;
+        Point a2 = null;
         boolean res1 = false;
-
-        for (int i = 0; i < Points.size() - 1; i++) {
-            if (res1) {
-                break;
-            }
-            a1 = Points.get(i);
-
-            for (int l = 0; l < Points.size(); l++) {
-                if (Points.get(l).equals(a1)) {
-                    l++;
-                }
-
-                a2 = Points.get(l);
-                points_between1 = points_inbetween(a1, a2, Points.get_arr());
-
-                if (points_between1.size() == Parameters.KPTS) {
-                    for (int j = 0; j < points_between1.size(); j++) {
-                        b1 = points_between1.get(j);
-
-                        for (int k = 0; k < points_between1.size(); k++) {
-                            b2 = points_between1.get(k);
-                            dis = lengt_between_points(b1, b2);
-                            if (dis <= Parameters.LENGTH1 && !b1.equals(b2)) {
-                                res1 = false;
-                                break;
-                            }
-
-                            if (k == points_between1.size() - 1)
-                                ;
-                            {
-                                res1 = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-
         boolean res2 = false;
+        double dis;
 
-        for (int i = 0; i < Points.size() - 1; i++) {
-            if (res2) {
-                break;
-            }
+        for (int i = 0; i < Points.size() - 2 - Parameters.KPTS; i++) {
+
             a1 = Points.get(i);
+            a2 = Points.get(i + Parameters.KPTS);
+            dis = lengt_between_points(a1, a2);
 
-            for (int l = 0; l < Points.size(); l++) {
-                if (Points.get(l).equals(a1)) {
-                    l++;
-                }
-                a2 = Points.get(l);
-                points_between1 = points_inbetween(a1, a2, Points.get_arr());
-
-                if (points_between1.size() == Parameters.KPTS) {
-                    for (int j = 0; j < points_between1.size(); j++) {
-                        b1 = points_between1.get(j);
-
-                        for (int k = 0; k < points_between1.size(); k++) {
-                            b2 = points_between1.get(k);
-                            dis = lengt_between_points(b1, b2);
-                            if (dis >= Parameters.LENGTH2 && !b1.equals(b2)) {
-                                res2 = false;
-                                break;
-                            }
-                            if (k == points_between1.size() - 1)
-                                ;
-                            {
-                                res2 = true;
-                            }
-                        }
-                    }
-                }
+            if (dis > Parameters.LENGTH1) {
+                res1 = true;
             }
 
         }
 
+        for (int i = 0; i < Points.size() - 2 - Parameters.KPTS; i++) {
+            a1 = Points.get(i);
+            a2 = Points.get(i + Parameters.KPTS);
+            dis = lengt_between_points(a1, a2);
+
+            if (dis < Parameters.LENGTH1) {
+                res2 = true;
+            }
+
+        }
         return res1 && res2;
     }
 
