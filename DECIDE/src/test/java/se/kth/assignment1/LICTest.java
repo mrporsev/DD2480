@@ -91,6 +91,21 @@ class LICTest {
 
     @Test
     void cond9() {
+        LIC lic = new LIC();
+        Points points = new Points(5);
+        points.add(new Point(0, 0));
+        points.add(new Point(1, 0));
+        points.add(new Point(2, 2));
+        points.add(new Point(2, 2));
+        points.add(new Point(3, 0));
+
+        Parameters parameters = new Parameters();
+        parameters.EPSILON = 1;
+        parameters.CPTS = 1;
+        parameters.DPTS = 1;
+
+        boolean result = lic.cond9(points, parameters);
+        assertTrue(result);
     }
 
     @Test
