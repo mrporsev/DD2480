@@ -24,7 +24,7 @@ public class Cmv {
             case 5:
                 cmv[i] = lic.cond5(points, parameters);
             case 6: 
-                cmv[i] = lic.cond6();
+                cmv[i] = lic.cond6(parameters,points);
             case 7: 
                 cmv[i] = lic.cond7(parameters, points);
             case 8:
