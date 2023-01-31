@@ -657,8 +657,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond13(Parameters parameters, Points points) {
