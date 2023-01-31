@@ -422,6 +422,14 @@ class LICTest {
         assertTrue(result);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three data points separated by exactly E PTS and F PTS consecutive
+     intervening points, respectively, that are the vertices of a triangle with area greater
+     than AREA1. The condition is not met when NUMPOINTS < 5.
+     1 ≤ E PTS, 1 ≤ F PTS
+     E PTS+F PTS ≤ NUMPOINTS−3
+     */
     @Test
     void cond10() {
         /**
@@ -447,6 +455,17 @@ class LICTest {
         parameters.AREA1 = 0.5;
 
         assertTrue(LIC.cond10(points, parameters));
+
+        //False case: The area of the triange < AREA1
+        parameters.AREA1 = 100;
+        assertFalse(LIC.cond10(points, parameters));
+
+        //Invalid input: NUMPOINTS < 5
+        parameters.AREA1 = -1;
+        Points points2 = new Points(1);
+        points2.add(new Point(1,1));
+        assertFalse(LIC.cond10(points2, parameters));
+
     }
 
     @Test
