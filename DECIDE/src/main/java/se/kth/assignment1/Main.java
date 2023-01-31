@@ -18,10 +18,6 @@ public class Main {
         Pum pum = new Pum(LCM, cmv);
         Fuv fuv = new Fuv(pum, PUV);
 
-        System.out.println(Arrays.toString(cmv.getCmv()));
-
-        System.out.println(Arrays.toString(fuv.getFuv()));
-
         boolean decision = true;
         for (int i = 0; i < 15; i++) {
             decision = decision && fuv.getElem(i);
@@ -73,7 +69,6 @@ public class Main {
                 LCM[j][i] = LCM[i][j];
             }
         }
-        System.out.println(Arrays.deepToString(LCM));
         boolean[] PUV = new boolean[] {true, false, true, false, false, false, false, false, false, false, false, false, true, false, false};
 
         decide(numpoints, points, parameters, LCM, PUV);
