@@ -20,6 +20,7 @@ class LICTest {
 
     @Test
     void cond0() {
+
         Parameters Parameters = new Parameters();
         Parameters.LENGTH1 = 3;
         int NUMPOINTS = 2;
@@ -38,10 +39,17 @@ class LICTest {
         points2.add(point2);
         var test2 = LIC.cond0(Parameters,points2);
         assertFalse(test2);
+
+
     }
 
+    /**
+     * 3 test cases to test if the condition is working as intended for a positive test, negative test and an test with invalid inputs.
+     */
     @Test
     void cond1() {
+
+        // Positive test case length area between point 1,2,3 cannot be contained in RADIUS1
         LIC lic = new LIC();
         Points points = new Points(3);
         points.add(new Point(0, 0));
@@ -53,6 +61,21 @@ class LICTest {
 
         boolean result = lic.cond1(points, parameters);
         assertTrue(result);
+
+        //Negative test case area between point 1,2,3 can be contained in RADIUS1
+        Points points2 = new Points(3);
+        points2.add(new Point(0, 0));
+        points2.add(new Point(1, 1));
+        points2.add(new Point(2, 2));
+        parameters.RADIUS1 = 100;
+        result = lic.cond1(points2,parameters);
+        assertFalse(result);
+
+        //Invalid input test RADIUS < 0
+        parameters.RADIUS1 = -1;
+        result = lic.cond1(points2,parameters);
+        assertFalse(result);
+
     }
 
     @Test
