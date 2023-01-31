@@ -31,6 +31,7 @@ public class LIC {
      */
     public static boolean cond0(Parameters Parameters, Points Points) {
 
+
         double dis = 0;
 
         Point cur_point;
@@ -421,7 +422,7 @@ public class LIC {
         Point pointB;
         Point pointC;
 
-        for (int i = 0; i < points.size() - 3 - parameters.APTS - parameters.BPTS; i++) {
+        for (int i = 0; i < points.size() - 2 - parameters.APTS - parameters.BPTS; i++) {
 
             pointA = points.get(i);
             pointB = points.get(i + parameters.APTS); // Maybe have to take +1 too if A_PTS and B_PTS are 1?
@@ -447,7 +448,7 @@ public class LIC {
             // If the length between some of the points are greater than the diameter, they
             // can't be within the radius
             if ((distanceAB > diameter) || (distanceBC > diameter) || (distanceCA > diameter)) {
-                return false;
+                return true;
             }
         }
         return false;
