@@ -36,3 +36,7 @@ To build and test the Gradle project, you can use the following commands:
 #### Adam Ezzaim - PUM, FUV, Unit Testing
 #### Pontus Norman - Cmv, LIC, Unit Testing
 #### David Cederström - Cmv, LIC, Unit Testing
+
+##
+## Way of working
+We have achieved "Foundation Established" status after the first task. We consider "Principles Established" to be fulfilled as we have agreed on the necessary tools and team operating context. However, full "In Use" status has not been achieved as the project repository is still small. The team does support the use of practices and tools, promoting communication and collaboration, but full "In Use" is our goal for the next assignment, with the aim of reaching milestones in "In Place."
