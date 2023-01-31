@@ -257,17 +257,17 @@ public class LIC {
                 }
 
                 // Second quadrant (x < 0 and y >= 0)
-                else if ((xCoordinateQthPoint.getX() >= 0) && (yCoordinateQthPoint.getY() >= 0)) {
+                else if ((xCoordinateQthPoint.getX() < 0) && (yCoordinateQthPoint.getY() >= 0)) {
                     existsInQuadrant[1] = true;
                 }
 
                 // Third quadrant (x <= 0 and y < 0)
-                else if ((xCoordinateQthPoint.getX() <= 0) && (yCoordinateQthPoint.getY() >= 0)) {
+                else if ((xCoordinateQthPoint.getX() <= 0) && (yCoordinateQthPoint.getY() < 0)) {
                     existsInQuadrant[2] = true;
                 }
 
                 // Fourth quadrant (x >= 0 and y < 0)
-                else if ((xCoordinateQthPoint.getX() >= 0) && (yCoordinateQthPoint.getY() >= 0)) {
+                else if ((xCoordinateQthPoint.getX() > 0) && (yCoordinateQthPoint.getY() < 0)) {
                     existsInQuadrant[3] = true;
                 }
             }
@@ -275,7 +275,7 @@ public class LIC {
             int numberOfPointsInQuadrants = 0;
 
             // Checks number of data points existing in quadrants
-            for (int j = 0; i < existsInQuadrant.length; j++) {
+            for (int j = 0; j < existsInQuadrant.length; j++) {
 
                 if (existsInQuadrant[j] == true) {
                     numberOfPointsInQuadrants++;

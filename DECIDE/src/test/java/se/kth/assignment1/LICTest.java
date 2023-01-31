@@ -62,6 +62,19 @@ class LICTest {
 
     @Test
     void cond4() {
+        LIC lic = new LIC();
+        Points points = new Points(4);
+        points.add(new Point(1, 1));
+        points.add(new Point(-1, 1));
+        points.add(new Point(-1, -1));
+        points.add(new Point(1, -1));
+
+        Parameters parameters = new Parameters();
+        parameters.QPTS = 3;
+        parameters.QUADS = 2;
+
+        boolean result = lic.cond4(points, parameters);
+        assertTrue(result);
     }
 
     @Test
