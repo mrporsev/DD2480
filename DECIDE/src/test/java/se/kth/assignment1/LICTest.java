@@ -80,7 +80,15 @@ class LICTest {
 
     @Test
     void cond2() {
-
+        /*
+         * Tests condition 2 and whether there exists at least one set of three
+         * consecutive data points which form an angle such that:
+         * angle < (PI-EPSILON)
+         * or
+         * angle > (PI-EPSILON)
+         * Where the second data point is the vertex in which the angle is.
+         * Should return true.
+         */
         Parameters Parameters = new Parameters();
         Parameters.EPSILON = 1;
         int NUMPOINTS = 3;
@@ -88,18 +96,49 @@ class LICTest {
         Point point1 = new Point(0, 0);
         Point point2 = new Point(2, 2);
         Point point3 = new Point(3, 0);
-
         points.add(point1);
         points.add(point2);
         points.add(point3);
-
         var test1 = LIC.cond2(points, Parameters);
         assertTrue(test1);
 
         /*
-        
+         * Tests condition 2 and whether there exists at least one set of three
+         * consecutive data points which form an angle such that:
+         * angle < (PI-EPSILON)
+         * or
+         * angle > (PI-EPSILON)
+         * Where the second data point is the vertex in which the angle is.
+         * Should return false.
          */
+        Parameters.EPSILON = 1;
+        int NUMPOINTS2 = 3;
+        Points points2 = new Points(NUMPOINTS2);
+        Point point4 = new Point(0, 0);
+        Point point5 = new Point(1, 0);
+        Point point6 = new Point(2, 0);
+        points2.add(point4);
+        points2.add(point5);
+        points2.add(point6);
+        var test2 = LIC.cond2(points2, Parameters);
+        assertFalse(test2);
 
+        /*
+         * Tests condition 2 and the correctnes of input. Should return false since the
+         * condition 0 <= EPSILON < PI needs to be fulfilled. In this case EPSILON=5 so
+         * it should return false.
+         */
+        Parameters.EPSILON = 5;
+        int NUMPOINTS3 = 3;
+        Points points3 = new Points(NUMPOINTS3);
+        Point point7 = new Point(0, 0);
+        Point point8 = new Point(2, 2);
+        Point point9 = new Point(3, 0);
+        points3.add(point7);
+        points3.add(point8);
+        points3.add(point9);
+        var test3 = LIC.cond2(points3, Parameters);
+        assertFalse(test3);
     }
 
     /**
