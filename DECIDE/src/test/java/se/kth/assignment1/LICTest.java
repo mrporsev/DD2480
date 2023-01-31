@@ -152,8 +152,13 @@ class LICTest {
         assertTrue(result);
     }
 
+    /**
+     * 3 test cases to test if the condition is working as intended for a positive test, negative test and a test with invalid inputs.
+     */
     @Test
     void cond5() {
+
+        //Positive test case 1-2 = -1 < 0
         LIC lic = new LIC();
         Points points = new Points(2);
         points.add(new Point(1, 1));
@@ -163,6 +168,22 @@ class LICTest {
 
         boolean result = lic.cond5(points, parameters);
         assertTrue(result);
+
+        //Negative test case 2-1 = 1 > 0
+        Points points2 = new Points(2);
+        points2.add(new Point(2,2));
+        points2.add(new Point(1,1));
+        result = lic.cond5(points2,parameters);
+        assertFalse(result);
+
+        //Invalid input case NUMPOINTS < 2
+        Points points3 = new Points(1);
+        points3.add(new Point(1,1));
+        result = lic.cond5(points3,parameters);
+        assertFalse(result);
+
+
+
     }
 
     @Test
