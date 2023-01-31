@@ -265,27 +265,64 @@ class LICTest {
 
     @Test
     void cond8() {
-
+        /*
+         * Tests condition 8 and whether there exists at least one set of three
+         * data points separated by exactly A_PTS and B_PTS consecutive intervening
+         * points, respectively, that cannot be contained within or on a circle of
+         * radius RADIUS1.
+         * The test should return true.
+         */
         Parameters Parameters = new Parameters();
         Parameters.APTS = 1;
         Parameters.BPTS = 1;
         Parameters.RADIUS1 = 1;
         int NUMPOINTS = 5;
         Points points = new Points(NUMPOINTS);
-        Point point1 = new Point(100, 100);
-        Point point2 = new Point(0, 0);
-        Point point3 = new Point(-100, -100);
-        Point point4 = new Point(1, 1);
-        Point point5 = new Point(50, 50);
-
-        points.add(point1);
-        points.add(point2);
-        points.add(point3);
-        points.add(point4);
-        points.add(point5);
-
+        points.add(new Point(100, 100));
+        points.add(new Point(0, 0));
+        points.add(new Point(-100, -100));
+        points.add(new Point(1, 1));
+        points.add(new Point(50, 50));
         var test1 = LIC.cond8(points, Parameters);
         assertTrue(test1);
+
+        /*
+         * Tests condition 8 and whether there exists at least one set of three
+         * data points separated by exactly A_PTS and B_PTS consecutive intervening
+         * points, respectively, that cannot be contained within or on a circle of
+         * radius RADIUS1.
+         * The test should return false since the points are within the radius
+         * RADIUS1=10.
+         */
+        Parameters.APTS = 1;
+        Parameters.BPTS = 1;
+        Parameters.RADIUS1 = 10;
+        int NUMPOINTS2 = 5;
+        Points points2 = new Points(NUMPOINTS2);
+        points2.add(new Point(1, 1));
+        points2.add(new Point(0, 0));
+        points2.add(new Point(-1, -1));
+        points2.add(new Point(1, -1));
+        points2.add(new Point(1, 0));
+        var test2 = LIC.cond8(points2, Parameters);
+        assertFalse(test2);
+
+        /*
+         * Tests condition 8 and the correctnes of input. Should return false since the
+         * condition NUMPOINTS < 5 needs to be fulfilled. In this case NUMPOINTS=4 so
+         * it should return false.
+         */
+        Parameters.APTS = 1;
+        Parameters.BPTS = 1;
+        Parameters.RADIUS1 = 10;
+        int NUMPOINTS3 = 4;
+        Points points3 = new Points(NUMPOINTS3);
+        points3.add(new Point(100, 100));
+        points3.add(new Point(0, 0));
+        points3.add(new Point(-100, -100));
+        points3.add(new Point(50, 50));
+        var test3 = LIC.cond8(points3, Parameters);
+        assertFalse(test3);
     }
 
     @Test
