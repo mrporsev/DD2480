@@ -155,7 +155,7 @@ public class LIC {
 
             // The angle of the second point (B)
             double angle = Math
-                    .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) + (distanceCA * distanceCA))
+                    .acos(((distanceAB * distanceAB) + (distanceBC * distanceBC) - (distanceCA * distanceCA))
                             / (2 * distanceAB * distanceBC));
 
             if ((angle < (Math.PI - parameters.EPSILON)) || (angle > (Math.PI + parameters.EPSILON))) {
