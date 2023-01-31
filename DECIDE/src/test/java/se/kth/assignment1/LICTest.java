@@ -134,6 +134,26 @@ class LICTest {
 
     @Test
     void cond13() {
+        /**
+         * According to the implementation of the cond13 method, it returns true if the distance between the APTS-th
+         * and EPTS-th points in the points list is less than or equal to the sum of RADIUS1 and RADIUS2.
+         * In this case, the distance between the first and the third points is sqrt((2-0)^2 + (2-0)^2) = 2.82, which is greater than 2 (RADIUS1) + 0 (RADIUS2).
+         * Thus, the method should return false, and the test case passes.
+         */
+        Points points = new Points(5);
+        points.add(new Point(0, 0));
+        points.add(new Point(1, 1));
+        points.add(new Point(2, 2));
+        points.add(new Point(3, 3));
+        points.add(new Point(4, 4));
+
+        Parameters parameters = new Parameters();
+        parameters.APTS = 1;
+        parameters.EPTS = 2;
+        parameters.RADIUS1 = 2;
+        parameters.RADIUS2 = 0;
+
+        assertFalse(LIC.cond13(parameters, points));
     }
 
     @Test
