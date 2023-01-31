@@ -73,6 +73,10 @@ class LICTest {
         var test1=LIC.cond2(points,Parameters);
         assertTrue(test1);
 
+        /*
+        
+         */
+
     }
 
     /**
@@ -91,6 +95,8 @@ class LICTest {
 
         boolean result = lic.cond3(points, parameters);
         assertFalse(result);
+
+
     }
 
     @Test
