@@ -456,7 +456,7 @@ class LICTest {
 
         assertTrue(LIC.cond10(points, parameters));
 
-        //False case: The area of the triange < AREA1
+        //False case: The area of the triange < AREA1.
         parameters.AREA1 = 100;
         assertFalse(LIC.cond10(points, parameters));
 
