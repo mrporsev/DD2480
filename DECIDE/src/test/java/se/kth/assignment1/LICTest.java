@@ -70,6 +70,22 @@ class LICTest {
 
     @Test
     void cond6() {
+        /**
+         * returns false when points.size() < 3 or parameters.NPTS < 3 or parameters.NPTS > points.size().
+         * In the test case, the size of points is 3, which is less than parameters.NPTS of 4, so the function returns false, and the assertion fails.
+         */
+        LIC lic = new LIC();
+        Parameters parameters = new Parameters();
+        Points points = new Points(3);
+        points.add(new Point(1,2));
+        points.add(new Point(1,3));
+        points.add(new Point(3,3));
+
+        parameters.NPTS = 3;
+        parameters.DIST = 10;
+
+        boolean result = lic.cond6(parameters, points);
+        assertFalse(result);
     }
 
     @Test
