@@ -103,10 +103,12 @@ class LICTest {
     }
 
     /**
-     * Testing condition 3 with triangle area equal to AREA1, should give false
+     * Testing condition 3 with triangle area equal to AREA1, should give false. Also testing a positive case and invalid input case
      */
     @Test
     void cond3() {
+
+        //Negative test case where the point forming an area has area = AREA1
         LIC lic = new LIC();
         Points points = new Points(3);
         points.add(new Point(0, 0));
@@ -118,6 +120,17 @@ class LICTest {
 
         boolean result = lic.cond3(points, parameters);
         assertFalse(result);
+
+        //Positive test case where the point forming an area has area > AREA1
+        parameters.AREA1 = 1;
+        result = lic.cond3(points,parameters);
+        assertTrue(result);
+
+        //Invalid input test case AREA1 < 0
+        parameters.AREA1 = -1;
+        result = lic.cond3(points,parameters);
+        assertFalse(result);
+
 
 
     }
