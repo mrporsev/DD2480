@@ -102,6 +102,26 @@ class LICTest {
 
     @Test
     void cond10() {
+        /**
+         * In this test case, EPTS = 1 and FPTS = 1, which means that the three points are separated by exactly 1 and 1 consecutive
+         * intervening points respectively.
+         * The area of the triangle formed by these three points is calculated using Heron's formula and is compared to AREA1 = 1.
+         * The area of the triangle is greater than AREA1, so the method returns true.
+         * Hence, the assertTrue statement doesn't throw an error and the test case passes.
+         */
+        Points points = new Points(5);
+        points.add(new Point(0, 0));
+        points.add(new Point(2, 0));
+        points.add(new Point(1, 1));
+        points.add(new Point(2, 2));
+        points.add(new Point(0, 2));
+
+        Parameters parameters = new Parameters();
+        parameters.EPTS = 1;
+        parameters.FPTS = 1;
+        parameters.AREA1 = 0.5;
+
+        assertTrue(LIC.cond10(points, parameters));
     }
 
     @Test
