@@ -113,6 +113,24 @@ class LICTest {
 
     @Test
     void cond12() {
+        Parameters Parameters = new Parameters();
+        Parameters.KPTS = 1;
+        Parameters.LENGTH1 = 1;
+        Parameters.LENGTH2 = 1;
+        int NUMPOINTS = 4;
+        Points points = new Points(NUMPOINTS);
+        Point point1 = new Point(0,0);
+        Point point2 = new Point(1,1);
+        Point point3 = new Point(2,2);
+        Point point4 = new Point(1.1,1.1);
+
+        points.add(point1);
+        points.add(point2);
+        points.add(point3);
+        points.add(point4);
+
+        var test1=LIC.cond0(Parameters,points);
+        assertTrue(test1);
     }
 
     @Test
