@@ -56,8 +56,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond1(Points points, Parameters parameters) {
@@ -106,8 +106,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond2(Points points, Parameters parameters) {
@@ -162,8 +162,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond3(Points points, Parameters parameters) {
@@ -211,8 +211,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond4(Points points, Parameters parameters) {
@@ -278,8 +278,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond5(Points points, Parameters parameters) {
@@ -303,9 +303,43 @@ public class LIC {
         return false;
     }
 
-    public static boolean cond6() {
+    /**
+     * @param parameters
+     * @param points
+     * @return if There exists at least one set of N PTS consecutive data points such that at least one of the points lies a distance greater than DIST
+     * from the line joining the first and last of these N PTS points. If the first and last points of these N PTS are identical, then the calculated
+     * distance to compare with DIST will be the distance from the coincident point to all other points of the N PTS consecutive points.
+     */
+    public static boolean cond6(Parameters parameters, Points points) {
+        if (points.size() < 3 || !(3 <= parameters.NPTS) || !(parameters.NPTS <= points.size() )) return false;
 
-        return true;
+        Point[] points_arr = points.get_arr();
+
+        //iterate over possible sets
+        for (int i = 0; i < points.size() - parameters.NPTS + 1; i++) {
+            if (points_arr[i].getX() == points_arr[i + parameters.NPTS - 1].getX() && points_arr[i].getY() == points_arr[i + parameters.NPTS - 1].getY()) {
+                for (int j = i + 1; j < i + parameters.NPTS - 1 ; j++) {
+                    if(lengt_between_points(points_arr[i], points_arr[j]) >= parameters.DIST) return true;
+                }
+
+            } else {
+                double x1 = points_arr[i].getX();
+                double y1 =  points_arr[i].getY();
+
+                double x2 = points_arr[i + parameters.NPTS - 1].getX();
+                double y2 = points_arr[i + parameters.NPTS - 1].getY();
+
+                for (int j = i + 1; j < i + parameters.NPTS - 1 ; j++) {
+                    double x0 = points_arr[j].getX();
+                    double y0 = points_arr[j].getY();
+
+                    double d = Math.abs((x2 - x1)*(y1 - y0) - (x1 - x0)*(y2 - y1)) / Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1)*(y2 - y1));
+
+                    if(d > parameters.DIST) return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -337,8 +371,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond8(Points points, Parameters parameters) {
@@ -397,8 +431,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond9(Points points, Parameters parameters) {
@@ -463,8 +497,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond10(Points points, Parameters parameters) {
@@ -522,8 +556,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond11(Points points, Parameters parameters) {
@@ -612,8 +646,8 @@ public class LIC {
     }
 
     /**
-     * @param Parameters parameters
-     * @param Points     list of datapoints
+     * @param parameters parameters
+     * @param points     list of datapoints
      * @return true or false depending on if condition checks out
      */
     public static boolean cond14(Points points, Parameters parameters) {
