@@ -20,7 +20,24 @@ class LICTest {
 
     @Test
     void cond0() {
+        Parameters Parameters = new Parameters();
+        Parameters.LENGTH1 = 3;
+        int NUMPOINTS = 2;
+        Points points = new Points(NUMPOINTS);
+        Point point1 = new Point(0,0);
+        Point point2 = new Point(10,10);
+        points.add(point1);
+        points.add(point2);
+        var test1=LIC.cond0(Parameters,points);
+        assertTrue(test1);
 
+        Points points2 = new Points(NUMPOINTS);
+        point1 = new Point(0,0);
+        point2 = new Point(1,1);
+        points2.add(point1);
+        points2.add(point2);
+        var test2 = LIC.cond0(Parameters,points2);
+        assertFalse(test2);
     }
 
     @Test
