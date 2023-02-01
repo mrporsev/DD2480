@@ -39,6 +39,8 @@ public class Pum {
     }
 
     protected boolean[][] setPum(int[][] LCM, boolean[] cmv) {
+        if(LCM == null) throw new IllegalArgumentException("Not a valid LCM");
+        if(cmv == null) throw new IllegalArgumentException("Not a valid CMV");
         boolean[][] p = new boolean[15][15];
         for (int i = 0; i < 15 ; i++) {
             for (int j = 0; j <= i; j++) {
@@ -46,6 +48,7 @@ public class Pum {
                     case 0 : p[i][j] = true;break;
                     case 1 : p[i][j] = cmv[i] && cmv[j];break;
                     case 2 : p[i][j] = cmv[i] || cmv[j];break;
+                    default : throw new IllegalArgumentException("LCM can only contain values 0, 1, 2"); 
                 }
                 p[j][i] = p[i][j];
             }
