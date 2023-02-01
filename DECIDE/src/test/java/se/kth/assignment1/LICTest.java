@@ -63,8 +63,16 @@ class LICTest {
         assertFalse(test3);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     * There exists at least one set of three consecutive data points that cannot all be contained
+     * within or on a circle of radius RADIUS1.
+     * (0 ≤ RADIUS1)
+     */
     @Test
     void cond1() {
+
+        //Positve test case: The points are cointained in the AREA1
         LIC lic = new LIC();
         Points points = new Points(3);
         points.add(new Point(0, 0));
@@ -76,6 +84,16 @@ class LICTest {
 
         boolean result = lic.cond1(points, parameters);
         assertTrue(result);
+
+        //Negative test case: The points are not cointained in the AREA1
+        parameters.RADIUS1 = 100;
+        result =lic.cond1(points,parameters);
+        assertFalse(result);
+
+        //invalid input test
+        parameters.RADIUS1 = -1;
+        result =lic.cond1(points,parameters);
+        assertFalse(result);
     }
 
     @Test
@@ -142,10 +160,15 @@ class LICTest {
     }
 
     /**
-     * Testing condition 3 with triangle area equal to AREA1, should give false
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three consecutive data points that are the vertices of a triangle
+     with area greater than AREA1.
+     (0 ≤ AREA1)
      */
     @Test
     void cond3() {
+
+        //False case: area = AREA1
         LIC lic = new LIC();
         Points points = new Points(3);
         points.add(new Point(0, 0));
@@ -156,6 +179,16 @@ class LICTest {
         parameters.AREA1 = 9;
 
         boolean result = lic.cond3(points, parameters);
+        assertFalse(result);
+
+        //Positive case: area > AREA1
+        parameters.AREA1 = 1;
+        result = lic.cond3(points, parameters);
+        assertTrue(result);
+
+        //Invalid input case:  AREA1 = -1
+        parameters.AREA1 = -1;
+        result = lic.cond3(points, parameters);
         assertFalse(result);
 
     }
@@ -210,8 +243,15 @@ class LICTest {
         assertFalse(result3);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
+     that X[j] - X[i] < 0. (where i = j-1)
+     */
     @Test
     void cond5() {
+
+        //Positive case: 1-2 = -1 < 0
         LIC lic = new LIC();
         Points points = new Points(2);
         points.add(new Point(1, 1));
@@ -221,6 +261,21 @@ class LICTest {
 
         boolean result = lic.cond5(points, parameters);
         assertTrue(result);
+
+        //Negative case: 2-1 = 1 > 0
+        Points points2 = new Points(2);
+        points2.add(new Point(2, 2));
+        points2.add(new Point(1, 1));
+        result = lic.cond5(points2, parameters);
+        assertFalse(result);
+
+        //Invalid case: NUMPOINTS < 2
+        Points points3 = new Points(1);
+        points3.add(new Point(1,1));
+        result = lic.cond5(points3, parameters);
+        assertFalse(result);
+
+
     }
 
     @Test
@@ -245,9 +300,18 @@ class LICTest {
         assertFalse(result);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of two data points separated by exactly K PTS consecutive
+     intervening points that are a distance greater than the length, LENGTH1, apart. The condition
+     is not met when NUMPOINTS < 3.
+     1 ≤ K PTS ≤ (NUMPOINTS−2)
+
+     */
     @Test
     void cond7() {
 
+        //Positive case: point 0,0 is LENGHT1 apart from 2,2
         Parameters Parameters = new Parameters();
         Parameters.KPTS = 1;
         Parameters.LENGTH1 = 1;
@@ -261,6 +325,20 @@ class LICTest {
         points.add(point3);
         var test1 = LIC.cond7(Parameters, points);
         assertTrue(test1);
+
+        //Negative case point 0,0 is not LENGHT1 apart from 2,2
+        Parameters.LENGTH1 = 10;
+        Points points1 = new Points(NUMPOINTS);
+        points1.add(new Point(0,0));
+        points1.add(new Point(1,1));
+        points1.add(new Point(2,2));
+        boolean res = LIC.cond7(Parameters, points1);
+        assertFalse(res);
+
+        //Invalid case: NUMPOINTS < 3
+        Points points2 = new Points(2);
+        res = LIC.cond7(Parameters, points2);
+        assertFalse(res);
     }
 
     @Test
@@ -344,6 +422,14 @@ class LICTest {
         assertTrue(result);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three data points separated by exactly E PTS and F PTS consecutive
+     intervening points, respectively, that are the vertices of a triangle with area greater
+     than AREA1. The condition is not met when NUMPOINTS < 5.
+     1 ≤ E PTS, 1 ≤ F PTS
+     E PTS+F PTS ≤ NUMPOINTS−3
+     */
     @Test
     void cond10() {
         /**
@@ -369,6 +455,17 @@ class LICTest {
         parameters.AREA1 = 0.5;
 
         assertTrue(LIC.cond10(points, parameters));
+
+        //False case: The area of the triange < AREA1.
+        parameters.AREA1 = 100;
+        assertFalse(LIC.cond10(points, parameters));
+
+        //Invalid input: NUMPOINTS < 5
+        parameters.AREA1 = -1;
+        Points points2 = new Points(1);
+        points2.add(new Point(1,1));
+        assertFalse(LIC.cond10(points2, parameters));
+
     }
 
     @Test
@@ -391,8 +488,21 @@ class LICTest {
         assertTrue(test1);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of two data points, separated by exactly K PTS consecutive
+     intervening points, which are a distance greater than the length, LENGTH1, apart. In addition,
+     there exists at least one set of two data points (which can be the same or different from
+     the two data points just mentioned), separated by exactly K PTS consecutive intervening
+     points, that are a distance less than the length, LENGTH2, apart. Both parts must be true
+     for the LIC to be true. The condition is not met when NUMPOINTS < 3.
+     0 ≤ LENGTH2
+     */
     @Test
     void cond12() {
+
+        //Positive test case: point 0,0 and 2,2 are > LENGHT1 = 1 apart with K_PTS = 1
+        //and 0,0 and 2,2 are < LENGHT2 = 5 apart with K_PTS = 1
         Parameters Parameters = new Parameters();
         Parameters.KPTS = 1;
         Parameters.LENGTH1 = 1;
@@ -411,6 +521,18 @@ class LICTest {
 
         var test1 = LIC.cond12(Parameters, points);
         assertTrue(test1);
+
+        //Negative test case: point 0,0 and 2,2 are < LENGHT1  apart
+        Parameters.LENGTH1 = 100;
+        boolean res = LIC.cond12(Parameters, points);
+        assertFalse(res);
+
+        //Invalid input case: NUMPOINTS < 3
+        Points points2 = new Points(2);
+        res = LIC.cond12(Parameters, points);
+        assertFalse(res);
+
+
     }
 
     @Test
