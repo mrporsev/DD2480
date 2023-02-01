@@ -437,6 +437,19 @@ class LICTest {
         assertFalse(test3);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three data points separated by exactly C PTS and D PTS
+     consecutive intervening points, respectively, that form an angle such that:
+     angle < (PI−EPSILON)
+     or
+     angle > (PI+EPSILON)
+     The second point of the set of three points is always the vertex of the angle. If either the first
+     point or the last point (or both) coincide with the vertex, the angle is undefined and the LIC
+     is not satisfied by those three points. When NUMPOINTS < 5, the condition is not met.
+     1 ≤ C PTS, 1 ≤ D PTS
+     C PTS+D PTS ≤ NUMPOINTS−3
+     */
     @Test
     void cond9() {
         LIC lic = new LIC();
@@ -454,6 +467,22 @@ class LICTest {
 
         boolean result = lic.cond9(points, parameters);
         assertTrue(result);
+
+        //False test case: all point are 0,0 and thus no angle is formed
+        Points points2 = new Points(5);
+        points2.add(new Point(0, 0));
+        points2.add(new Point(0, 0));
+        points2.add(new Point(0, 0));
+        points2.add(new Point(0, 0));
+        points2.add(new Point(0, 0));
+        result = lic.cond9(points2, parameters);
+        assertFalse(result);
+
+        //Invalid input case: NUMPOINTS < 5
+        Points points3 = new Points(1);
+        result = lic.cond9(points3, parameters);
+        assertFalse(result);
+
     }
 
     /**
