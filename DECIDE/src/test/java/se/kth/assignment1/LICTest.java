@@ -18,6 +18,12 @@ class LICTest {
 
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of two consecutive data points that are a distance greater than
+     the length, LENGTH1, apart.
+     (0 ≤ LENGTH1)
+     */
     @Test
     void cond0() {
         /*
@@ -96,6 +102,18 @@ class LICTest {
         assertFalse(result);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three consecutive data points which form an angle such that:
+     angle < (PI−EPSILON)
+     or
+     angle > (PI+EPSILON)
+     The second of the three consecutive points is always the vertex of the angle. If either the first
+     point or the last point (or both) coincides with the vertex, the angle is undefined and the LIC
+     is not satisfied by those three points.
+     (0 ≤ EPSILON < PI)
+
+     */
     @Test
     void cond2() {
         /*
@@ -193,6 +211,16 @@ class LICTest {
 
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of Q PTS consecutive data points that lie in more than QUADS
+     quadrants. Where there is ambiguity as to which quadrant contains a given point, priority
+     of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0)
+     is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point
+     (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+     (2 ≤ Q PTS ≤ NUMPOINTS), (1 ≤ QUADS ≤ 3)
+
+     */
     @Test
     void cond4() {
         /*
@@ -278,6 +306,17 @@ class LICTest {
 
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of N PTS consecutive data points such that at least one of the
+     points lies a distance greater than DIST from the line joining the first and last of these N PTS
+     points. If the first and last points of these N PTS are identical, then the calculated distance
+     to compare with DIST will be the distance from the coincident point to all other points of
+     the N PTS consecutive points. The condition is not met when NUMPOINTS < 3.
+     (3 ≤ N PTS ≤ NUMPOINTS), (0 ≤ DIST)
+
+
+     */
     @Test
     void cond6() {
         LIC lic = new LIC();
@@ -375,6 +414,15 @@ class LICTest {
         assertFalse(res);
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     . There exists at least one set of three data points separated by exactly A PTS and B PTS
+     consecutive intervening points, respectively, that cannot be contained within or on a circle of
+     radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+     1 ≤ A PTS, 1 ≤ B PTS
+     A PTS+B PTS ≤ (NUMPOINTS−3)
+
+     */
     @Test
     void cond8() {
         /*
@@ -674,6 +722,17 @@ class LICTest {
 
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three data points, separated by exactly E PTS and F PTS consecutive
+     intervening points, respectively, that are the vertices of a triangle with area greater
+     than AREA1. In addition, there exist three data points (which can be the same or different
+     from the three data points just mentioned) separated by exactly E PTS and F PTS consecutive intervening points,
+     respectively, that are the vertices of a triangle with area less than
+     AREA2. Both parts must be true for the LIC to be true. The condition is not met when
+     NUMPOINTS < 5.
+     0 ≤ AREA2
+     */
     @Test
     void cond14() {
         Parameters Parameters = new Parameters();
