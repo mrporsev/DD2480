@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="se.kth.assignment1.MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-01T10:30:01" hostname="n138-p102.eduroam.kth.se" time="0.025">
+  <properties/>
+  <testcase name="decide()" classname="se.kth.assignment1.MainTest" time="0.025"/>
+  <system-out><![CDATA[No
+Yes
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
