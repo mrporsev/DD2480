@@ -280,14 +280,48 @@ class LICTest {
 
     @Test
     void cond6() {
+        LIC lic = new LIC();
+        Parameters parameters = new Parameters();
+
         /**
+         * positive case :
+         * Should return true since distance to the middle points from the coincident point is > 2
+         */
+        Points points1 = new Points(4);
+        points1.add(new Point(0, 0));
+        points1.add(new Point(2, 0));
+        points1.add(new Point(0, 3));
+        points1.add(new Point(0, 0));
+
+        parameters.NPTS = 4;
+        parameters.DIST = 2;
+
+        assertTrue(lic.cond6(parameters, points1));
+
+        /**
+         * negative case :
+         * Should return true sinceno  distance to the middle points from the coincident point is > 5
+         */
+        Points points2 = new Points(4);
+        points1.add(new Point(0, 0));
+        points1.add(new Point(2, 0));
+        points1.add(new Point(0, 3));
+        points1.add(new Point(0, 0));
+
+        parameters.NPTS = 4;
+        parameters.DIST = 5;
+
+        assertFalse(lic.cond6(parameters, points2));
+
+        /**
+         * Invalid input case :
          * returns false when points.size() < 3 or parameters.NPTS < 3 or
          * parameters.NPTS > points.size().
          * In the test case, the size of points is 3, which is less than parameters.NPTS
          * of 4, so the function returns false, and the assertion fails.
          */
-        LIC lic = new LIC();
-        Parameters parameters = new Parameters();
+
+
         Points points = new Points(3);
         points.add(new Point(1, 2));
         points.add(new Point(1, 3));
@@ -470,10 +504,13 @@ class LICTest {
 
     @Test
     void cond11() {
-
         Parameters Parameters = new Parameters();
-        Parameters.GPTS = 1;
+        /**
+         * Postive case:
+         * point[0] and point[2] are separated by 1 point (GPTS) and x[0] - x[1] < 0
+         */
 
+        Parameters.GPTS = 1;
         int NUMPOINTS = 3;
         Points points = new Points(NUMPOINTS);
         Point point1 = new Point(0, 0);
@@ -486,6 +523,25 @@ class LICTest {
 
         var test1 = LIC.cond11(points, Parameters);
         assertTrue(test1);
+
+        /**
+         * negative test :
+         * first and last point are such that x[j] - x[i] = 3 > 0
+         */
+        Parameters.GPTS = 1;
+        Points points2 = new Points(NUMPOINTS);
+        points2.add(new Point(5, 0));
+        points2.add(new Point(1, 1));
+        points2.add(new Point(2, 0));
+
+        assertFalse(LIC.cond11(points2, Parameters));
+
+        /**
+         * invalid input case:
+         * Here NUMPOINTS = 2, which is in invalid input, hence the condition should be false
+         */
+        points.remove(point1);
+        assertFalse(LIC.cond11(points, Parameters));
     }
 
     /**
@@ -566,6 +622,11 @@ class LICTest {
     @Test
     void cond14() {
         Parameters Parameters = new Parameters();
+
+        /*
+        positive test case :
+        Test when there exist an area greater than AREA1 and a area less then AREA2
+         */
         Parameters.EPTS = 1;
         Parameters.FPTS = 1;
         Parameters.AREA1 = 1;
@@ -587,6 +648,33 @@ class LICTest {
 
         var test1 = LIC.cond14(points, Parameters);
         assertTrue(test1);
+
+        /*
+        invalid input case : Not enough number of points (NUMPOINTS < 5) should return false
+         */
+        points.remove(point1);
+        points.remove(point2);
+
+        assertFalse(LIC.cond14(points, Parameters));
+
+        /*
+        negative test case :
+         */
+        Points points2 = new Points(6);
+        points2.add(new Point(0, 0));
+        points2.add(new Point(0, 0));
+        points2.add(new Point(1, 0));
+        points2.add(new Point(2, 0));
+        points2.add(new Point(0, 1));
+        points2.add(new Point(0, 2));
+
+        Parameters.AREA1 = 1.05;
+        Parameters.AREA2 = 0.40;
+
+        assertFalse(LIC.cond14(points2, Parameters));
+
+
+
 
     }
 }
