@@ -621,7 +621,7 @@ public class LIC {
      */
     public static boolean cond12(Parameters Parameters, Points Points) {
 
-        if (Points.size() < 3 || Parameters.LENGTH2 < 0) {
+        if (Points.size() < 3 || Parameters.LENGTH2 < 0 || Parameters.KPTS + 1 > Points.size()) {
             return false;
         }
 
@@ -677,7 +677,7 @@ public class LIC {
         if (points.size() < 5) {
             return false;
         }
-        if (0 <= parameters.RADIUS2) {
+        if (0 > parameters.RADIUS2 || parameters.RADIUS1 < 0 || parameters.APTS + parameters.EPTS + 2 >= points.size()) {
             return false;
         }
 
@@ -715,7 +715,7 @@ public class LIC {
             if ((distanceAB > diameterOne) || (distanceBC > diameterOne) || (distanceCA > diameterOne)) {
                 radiusOneCheck = true;
             }
-            if ((distanceAB > diameterTwo) || (distanceBC > diameterTwo) || (distanceCA > diameterTwo)) {
+            if ((distanceAB <= diameterTwo) || (distanceBC <= diameterTwo) || (distanceCA <= diameterTwo)) {
                 radiusTwoCheck = true;
             }
 
@@ -745,7 +745,7 @@ public class LIC {
          * 0 ≤ AREA2
          */
 
-        if (points.size() < 5) {
+        if (points.size() < 5 || parameters.EPTS + parameters.FPTS + 2 >= points.size()) {
             return false;
         }
         if (parameters.AREA2 <= 0) {
