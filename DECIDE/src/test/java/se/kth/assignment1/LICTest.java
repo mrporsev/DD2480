@@ -591,6 +591,17 @@ class LICTest {
 
     }
 
+    /**
+     * Test positive, negative and invalid input case for the condition:
+     There exists at least one set of three data points, separated by exactly A PTS and B PTS
+     consecutive intervening points, respectively, that cannot be contained within or on a circle of
+     radius RADIUS1. In addition, there exists at least one set of three data points (which can be
+     the same or different from the three data points just mentioned) separated by exactly A PTS
+     and B PTS consecutive intervening points, respectively, that can be contained in or on a
+     circle of radius RADIUS2. Both parts must be true for the LIC to be true. The condition is
+     not met when NUMPOINTS < 5.
+     0 ≤ RADIUS2
+     */
     @Test
     void cond13() {
         /**
@@ -610,13 +621,28 @@ class LICTest {
         points.add(new Point(3, 3));
         points.add(new Point(4, 4));
 
+
+
         Parameters parameters = new Parameters();
         parameters.APTS = 1;
-        parameters.EPTS = 2;
-        parameters.RADIUS1 = 2;
+        parameters.EPTS = 1;
+        parameters.RADIUS1 = 100;
         parameters.RADIUS2 = 0;
 
         assertFalse(LIC.cond13(parameters, points));
+
+        //True test case: Distance = 2.82 > AREA = 0
+        //parameters.EPTS = 2;
+        parameters.RADIUS1 = 0;
+        parameters.RADIUS2 = 100;
+        assertTrue(LIC.cond13(parameters, points));
+
+        //Invalid case: RADIUS1 < 0
+        parameters.RADIUS1 = - 1;
+        assertFalse(LIC.cond13(parameters, points));
+
+
+
     }
 
     @Test
