@@ -19,6 +19,8 @@ public class Fuv {
     }
 
     protected boolean[] setFuv(boolean[][] PUM, boolean[] PUV) {
+        if(PUM == null) throw new IllegalArgumentException("Not a valid PUM");
+        if(PUV == null) throw new IllegalArgumentException("Not a valid PUV");
         boolean[] f = new boolean[15];
         for (int i = 0; i < 15; i++) {
             if (!PUV[i]) f[i] = true;

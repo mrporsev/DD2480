@@ -59,6 +59,6 @@ public class FuvTest {
         assertEquals(pumRows[12], FUV[12]);
         assertTrue(FUV[13]);
         assertEquals(pumRows[14], FUV[14]);
-        
+
     }
 }
