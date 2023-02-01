@@ -622,6 +622,11 @@ class LICTest {
     @Test
     void cond14() {
         Parameters Parameters = new Parameters();
+
+        /*
+        positive test case :
+        Test when there exist an area greater than AREA1 and a area less then AREA2
+         */
         Parameters.EPTS = 1;
         Parameters.FPTS = 1;
         Parameters.AREA1 = 1;
@@ -643,6 +648,33 @@ class LICTest {
 
         var test1 = LIC.cond14(points, Parameters);
         assertTrue(test1);
+
+        /*
+        invalid input case : Not enough number of points (NUMPOINTS < 5) should return false
+         */
+        points.remove(point1);
+        points.remove(point2);
+
+        assertFalse(LIC.cond14(points, Parameters));
+
+        /*
+        negative test case :
+         */
+        Points points2 = new Points(6);
+        points2.add(new Point(0, 0));
+        points2.add(new Point(0, 0));
+        points2.add(new Point(1, 0));
+        points2.add(new Point(2, 0));
+        points2.add(new Point(0, 1));
+        points2.add(new Point(0, 2));
+
+        Parameters.AREA1 = 1.05;
+        Parameters.AREA2 = 0.40;
+
+        assertFalse(LIC.cond14(points2, Parameters));
+
+
+
 
     }
 }
