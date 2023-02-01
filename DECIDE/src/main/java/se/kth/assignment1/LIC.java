@@ -381,9 +381,9 @@ public class LIC {
         Point a2 = null;
         double dis;
 
-        for (int i = 0; i < Points.size() - Parameters.KPTS; i++) {
+        for (int i = 0; i < Points.size() - 1 - Parameters.KPTS; i++) {
             a1 = Points.get(i);
-            a2 = Points.get(i + Parameters.KPTS);
+            a2 = Points.get(i + 1 + Parameters.KPTS);
             dis = lengt_between_points(a1, a2);
 
             if (dis > Parameters.LENGTH1) {
@@ -425,8 +425,8 @@ public class LIC {
         for (int i = 0; i < points.size() - 2 - parameters.APTS - parameters.BPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.APTS); // Maybe have to take +1 too if A_PTS and B_PTS are 1?
-            pointC = points.get(i + parameters.APTS + parameters.BPTS); // and + A_PTS here? Otherwise, they can pick
+            pointB = points.get(i + 1 + parameters.APTS); // Maybe have to take +1 too if A_PTS and B_PTS are 1?
+            pointC = points.get(i + 1 +parameters.APTS + 1 + parameters.BPTS); // and + A_PTS here? Otherwise, they can pick
                                                                         // the same
             // point?
 
@@ -490,8 +490,8 @@ public class LIC {
         for (int i = 0; i < points.size() - 2 - parameters.CPTS - parameters.DPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.CPTS); // The vertex (MAYBE +1 also? Same question as case 8)
-            pointC = points.get(i + parameters.CPTS + parameters.DPTS);
+            pointB = points.get(i + 1 + parameters.CPTS); // The vertex (MAYBE +1 also? Same question as case 8)
+            pointC = points.get(i + 1 + parameters.CPTS + 1 + parameters.DPTS);
 
             // Distance between x-coordinates
             double xDistanceAB = Math.abs(pointA.getX() - pointB.getX());
@@ -550,8 +550,8 @@ public class LIC {
         for (int i = 0; i < points.size() - 2 - parameters.EPTS - parameters.FPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.EPTS);
-            pointC = points.get(i + parameters.EPTS + parameters.FPTS);
+            pointB = points.get(i + 1 +parameters.EPTS);
+            pointC = points.get(i + 1 + parameters.EPTS + 1 + parameters.FPTS);
 
             // Distance between x-coordinates
             double xDistanceAB = Math.abs(pointA.getX() - pointB.getX());
@@ -605,7 +605,7 @@ public class LIC {
         for (int i = 0; i < points.size() - 1 - parameters.GPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.GPTS);
+            pointB = points.get(i + 1 + parameters.GPTS);
 
             if ((pointA.getX() - pointB.getX()) < 0) { // Since i = j-1 --> j = i+1 (Maybe +1 as above?)
                 return true;
@@ -631,10 +631,10 @@ public class LIC {
         boolean res2 = false;
         double dis;
 
-        for (int i = 0; i < Points.size() - Parameters.KPTS; i++) {
+        for (int i = 0; i < Points.size() - 1 - Parameters.KPTS; i++) {
 
             a1 = Points.get(i);
-            a2 = Points.get(i + Parameters.KPTS);
+            a2 = Points.get(i + 1 + Parameters.KPTS);
             dis = lengt_between_points(a1, a2);
 
             if (dis > Parameters.LENGTH1) {
@@ -643,9 +643,9 @@ public class LIC {
 
         }
 
-        for (int i = 0; i < Points.size() - Parameters.KPTS; i++) {
+        for (int i = 0; i < Points.size() - 1 - Parameters.KPTS; i++) {
             a1 = Points.get(i);
-            a2 = Points.get(i + Parameters.KPTS);
+            a2 = Points.get(i + 1 + Parameters.KPTS);
             dis = lengt_between_points(a1, a2);
 
             if (dis < Parameters.LENGTH2) {
@@ -692,8 +692,8 @@ public class LIC {
         for (int i = 0; i < points.size() - 2 - parameters.APTS - parameters.EPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.APTS);
-            pointC = points.get(i + parameters.APTS + parameters.EPTS);
+            pointB = points.get(i + 1 + parameters.APTS);
+            pointC = points.get(i + 1 + parameters.APTS + 1 + parameters.EPTS);
 
             // Distance between x-coordinates
             double xDistanceAB = Math.abs(pointA.getX() - pointB.getX());
@@ -761,8 +761,8 @@ public class LIC {
         for (int i = 0; i < points.size() - 2 - parameters.EPTS - parameters.FPTS; i++) {
 
             pointA = points.get(i);
-            pointB = points.get(i + parameters.EPTS);
-            pointC = points.get(i + parameters.EPTS + parameters.FPTS);
+            pointB = points.get(i + 1 + parameters.EPTS);
+            pointC = points.get(i + 1 + parameters.EPTS + 1 + parameters.FPTS);
 
             // Distance between x-coordinates
             double xDistanceAB = Math.abs(pointA.getX() - pointB.getX());
